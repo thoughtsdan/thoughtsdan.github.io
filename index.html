@@ -178,11 +178,12 @@
     color: var(--text-dim);
   }
 
+  /* ARTICLE — flex layout, no grid, no num column */
   .article {
-    display: grid;
-    grid-template-columns: 56px 1fr auto;
-    align-items: start;
-    gap: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
     padding: 1.8rem 2rem;
     border-bottom: 1px solid var(--border);
     cursor: pointer;
@@ -208,10 +209,9 @@
   .article:hover .article-title { color: var(--text-bright); }
   .article:hover .article-arrow { opacity: 1; transform: translateX(0); }
 
-  .article-num {
-    font-size: 0.65rem;
-    color: var(--text-dim);
-    padding-top: 0.2rem;
+  .article-content {
+    flex: 1;
+    min-width: 0;
   }
 
   .article-meta {
@@ -243,13 +243,8 @@
     opacity: 0;
     transform: translateX(-8px);
     transition: all 0.25s ease;
-    align-self: center;
+    flex-shrink: 0;
   }
-
-  .article:nth-child(1) { animation: fadeUp 0.7s ease 0.45s both; }
-  .article:nth-child(2) { animation: fadeUp 0.7s ease 0.55s both; }
-  .article:nth-child(3) { animation: fadeUp 0.7s ease 0.65s both; }
-  .article:nth-child(4) { animation: fadeUp 0.7s ease 0.75s both; }
 
   /* NEWSLETTER */
   .newsletter {
@@ -413,7 +408,17 @@
     <div class="article-arrow">→</div>
   </article>
 
-  
+  <!-- Pour ajouter un article, copie-colle ce bloc ↓ -->
+  <!--
+  <article class="article">
+    <div class="article-content">
+      <div class="article-meta">Category — Date</div>
+      <h2 class="article-title">Title</h2>
+      <p class="article-excerpt">Excerpt.</p>
+    </div>
+    <div class="article-arrow">→</div>
+  </article>
+  -->
 
 </div>
 
