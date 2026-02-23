@@ -7,14 +7,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg:        #0a0e17;
-      --surface:    #111827;
-      --border:     #1e293b;
-      --text:       #94a3b8;
-      --text-dim:   #64748b;
-      --text-bright:#e2e8f0;
-      --highlight:  #3b82f6;     /* bleu plus moderne */
-      --accent:     #60a5fa;
+      --bg-dark:    #0f1117;     /* fond gris très foncé uniforme */
+      --surface:    #161b22;     /* légèrement plus clair pour les cartes / blocs */
+      --border:     #21262d;
+      --text:       #a0a8b8;
+      --text-dim:   #6e7681;
+      --text-bright:#e6edf3;
+      --highlight:  #58a6ff;     /* bleu GitHub-like, moderne */
+      --accent:     #79c0ff;
       --radius:     16px;
     }
 
@@ -25,7 +25,7 @@
     }
 
     body {
-      background: var(--bg);
+      background: var(--bg-dark);
       color: var(--text);
       font-family: 'Inter', system-ui, sans-serif;
       font-weight: 400;
@@ -42,7 +42,7 @@
       width: 280px;
       padding: 3rem 2.5rem;
       border-right: 1px solid var(--border);
-      background: var(--surface);
+      background: var(--bg-dark);   /* même fond que le body */
       z-index: 100;
       display: flex;
       flex-direction: column;
@@ -84,6 +84,7 @@
       margin-left: 280px;
       padding: 4rem 5rem 6rem;
       max-width: 1200px;
+      background: var(--bg-dark);
     }
 
     /* HERO */
@@ -116,12 +117,12 @@
       max-width: 620px;
     }
 
-    /* FEATURED – full bleed style */
+    /* FEATURED */
     .featured {
       position: relative;
       margin: 0 -5rem 5rem;
       padding: 6rem 5rem;
-      background: linear-gradient(135deg, #0f172a 0%, #111827 100%);
+      background: var(--surface);   /* un tout petit peu plus clair pour le détacher */
       border-radius: 0;
       overflow: hidden;
       isolation: isolate;
@@ -131,7 +132,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at 30% 70%, rgba(59,130,246,0.08) 0%, transparent 60%);
+      background: radial-gradient(circle at 30% 70%, rgba(88,166,255,0.06) 0%, transparent 70%);
       z-index: 0;
     }
 
@@ -183,7 +184,7 @@
       transform: translateY(-2px);
     }
 
-    /* RECENT ARTICLES – Masonry / Grid cards */
+    /* RECENT ARTICLES */
     .recent-section {
       margin: 6rem 0;
     }
@@ -214,7 +215,7 @@
 
     .article:hover {
       transform: translateY(-8px);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.35);
     }
 
     .article-content {
@@ -280,7 +281,7 @@
 
     .form-row input {
       padding: 1rem 1.4rem;
-      background: var(--bg);
+      background: var(--bg-dark);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       color: var(--text-bright);
@@ -316,6 +317,7 @@
       color: var(--text-dim);
       font-size: 0.85rem;
       border-top: 1px solid var(--border);
+      background: var(--bg-dark);
     }
 
     /* Responsive */
@@ -382,11 +384,6 @@
             <p class="article-excerpt">Available soon.</p>
           </div>
         </article>
-
-        <!-- Duplique cet article pour tester la grille -->
-        <!--
-        <article class="article">…</article>
-        -->
       </div>
     </section>
 
@@ -414,7 +411,7 @@
   function handleSubscribe() {
     const email = document.getElementById('email').value;
     if (!email || !email.includes('@')) {
-      document.getElementById('email').style.borderColor = '#ef4444';
+      document.getElementById('email').style.borderColor = '#f85149';
       return;
     }
     document.querySelector('.form-submit').style.display = 'none';
