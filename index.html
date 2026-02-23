@@ -190,7 +190,7 @@
       transform: translateY(-2px);
     }
 
-    /* RECENT ARTICLES */
+    /* RECENT */
     .recent-section {
       margin: 7rem 0;
     }
@@ -264,7 +264,7 @@
     }
 
     .newsletter-inner {
-      max-width: 720px;
+      max-width: 800px;          /* un peu plus large globalement */
       margin: 0 auto;
       text-align: center;
       padding: 0 2rem;
@@ -286,18 +286,19 @@
     .newsletter-form {
       display: flex;
       flex-direction: column;
-      gap: 1.2rem;
-      max-width: 480px;
+      gap: 1.4rem;
+      max-width: 620px;          /* ← plus large que avant (480 → 620) */
       margin: 0 auto;
     }
 
     .form-row input {
-      padding: 1rem 1.4rem;
+      padding: 1.25rem 1.6rem;   /* ← plus haut (padding vertical augmenté) */
       background: var(--bg-dark);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       color: var(--text-bright);
-      font-size: 1rem;
+      font-size: 1.05rem;
+      width: 100%;
     }
 
     .form-row input:focus {
@@ -306,13 +307,13 @@
     }
 
     .form-submit {
-      padding: 1.1rem;
+      padding: 1.25rem;
       background: var(--highlight);
       border: none;
       border-radius: var(--radius);
       color: white;
       font-weight: 600;
-      font-size: 1rem;
+      font-size: 1.05rem;
       cursor: pointer;
       transition: all 0.25s;
     }
@@ -322,25 +323,25 @@
       transform: scale(1.02);
     }
 
-    /* FOOTER – version épurée et centrée */
+    /* FOOTER – centrage parfait, sans bordure haute */
     footer {
-      padding: 4rem 2rem 6rem;
+      padding: 5rem 2rem 7rem;
       text-align: center;
       color: var(--text-dim);
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       background: var(--bg-dark);
-      /* pas de bordure supérieure */
     }
 
     footer span {
       display: inline-block;
-      line-height: 1.6;
     }
 
     /* Responsive */
     @media (max-width: 1024px) {
       .sidebar { width: 240px; }
       main { margin-left: 240px; padding: 3rem 3rem; }
+      .newsletter-inner { max-width: 700px; }
+      .newsletter-form { max-width: 560px; }
     }
 
     @media (max-width: 768px) {
@@ -361,16 +362,9 @@
         padding-left: 2rem;
         padding-right: 2rem;
       }
+      .newsletter-form { max-width: 100%; }
       footer { padding: 4rem 1.5rem 6rem; }
     }
-    footer {
-  padding: 4rem 2rem 6rem;
-  text-align: center;
-  color: var(--text-dim);
-  font-size: 0.9rem;
-  background: var(--bg-dark);
-  /* PAS de border-top */
-}
   </style>
 </head>
 <body>
@@ -413,7 +407,6 @@
             <p class="article-excerpt">Available soon.</p>
           </div>
         </article>
-        <!-- Duplique pour tester l’effet stagger -->
       </div>
     </section>
 
@@ -426,7 +419,6 @@
             <input type="email" id="email" placeholder="you@example.com">
           </div>
           <button class="form-submit" onclick="handleSubscribe()">Subscribe</button>
-          <div class="success-msg" id="successMsg">✓ Welcome. Your first letter is on its way.</div>
           <p class="newsletter-note">No spam. Unsubscribe anytime.</p>
         </div>
       </div>
@@ -439,16 +431,19 @@
 
   <script>
   function handleSubscribe() {
-    const email = document.getElementById('email').value;
+    const email = document.getElementById('email').value.trim();
     if (!email || !email.includes('@')) {
       document.getElementById('email').style.borderColor = '#f85149';
       return;
     }
-    document.querySelector('.form-submit').style.display = 'none';
-    document.getElementById('successMsg').style.display = 'block';
+
+    // Simulation d'envoi (pas de vrai backend ici)
+    document.querySelector('.form-submit').textContent = 'Subscribed!';
+    document.querySelector('.form-submit').disabled = true;
+    document.querySelector('.form-submit').style.opacity = '0.7';
   }
 
-  // Apparition progressive des articles
+  // Apparition des articles
   const articles = document.querySelectorAll('.article');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry, index) => {
