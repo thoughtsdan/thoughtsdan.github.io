@@ -19,11 +19,7 @@
       --sidebar-width: 280px;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       background: var(--bg-dark);
@@ -79,15 +75,40 @@
       background: var(--bg-dark);
     }
 
+    /* Hero ajusté : un peu plus haut et un peu plus petit */
+    .hero {
+      padding: 8rem 0 6rem;          /* ← padding-top réduit (avant 10rem) */
+      max-width: 900px;
+    }
+
+    .hero-tag {
+      font-size: 0.72rem;             /* ← un peu plus petit */
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--highlight);
+      margin-bottom: 1.6rem;
+      font-weight: 500;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 6.2vw, 4.8rem);   /* ← taille réduite (avant clamp 3.2-5.5rem) */
+      color: var(--text-bright);
+      line-height: 1.1;
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      margin-bottom: 1.4rem;
+    }
+
+    .hero p {
+      font-size: 1.05rem;             /* ← un peu plus petit */
+      color: var(--text-dim);
+      max-width: 620px;
+    }
+
     /* Animations (inchangées) */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
       to   { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes fadeScale {
-      from { opacity: 0; transform: scale(0.98); }
-      to   { opacity: 1; transform: scale(1); }
     }
 
     .hero > * { opacity: 0; }
@@ -95,36 +116,7 @@
     .hero h1      { animation: fadeUp 0.9s ease-out 0.25s forwards; }
     .hero p       { animation: fadeUp 1s ease-out 0.4s forwards; }
 
-    .hero {
-      padding: 10rem 0 7rem;
-      max-width: 900px;
-    }
-
-    .hero-tag {
-      font-size: 0.82rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--highlight);
-      margin-bottom: 1.8rem;
-      font-weight: 500;
-    }
-
-    .hero h1 {
-      font-size: clamp(3.2rem, 7vw, 5.5rem);
-      color: var(--text-bright);
-      line-height: 1.08;
-      font-weight: 700;
-      letter-spacing: -0.035em;
-      margin-bottom: 1.6rem;
-    }
-
-    .hero p {
-      font-size: 1.15rem;
-      color: var(--text-dim);
-      max-width: 620px;
-    }
-
-    /* Le reste reste identique (featured, articles, newsletter, footer) */
+    /* Le reste du style (featured, articles, newsletter, footer) reste identique */
     .featured {
       position: relative;
       margin: 0 -5rem 6rem;
@@ -132,7 +124,7 @@
       background: var(--surface);
       overflow: hidden;
       opacity: 0;
-      animation: fadeScale 1.2s ease-out 0.6s forwards;
+      animation: fadeUp 1.2s ease-out 0.6s forwards;
     }
 
     .featured::before {
@@ -240,6 +232,7 @@
       main, footer { padding: 2rem 2rem 4rem; }
       .featured, .newsletter { margin: 0 -2rem; padding-left: 2rem; padding-right: 2rem; }
       .newsletter-form { max-width: 100%; }
+      .hero { padding: 7rem 0 5rem; }
     }
   </style>
 </head>
