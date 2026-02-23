@@ -19,7 +19,11 @@
       --sidebar-width: 280px;
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
     body {
       background: var(--bg-dark);
@@ -31,25 +35,48 @@
       overflow-x: hidden;
     }
 
-    /* ... (sidebar et logo inchangés) ... */
+    /* Sidebar fixe à gauche sur desktop */
+    .sidebar {
+      position: fixed;
+      inset: 0 auto 0 0;
+      width: var(--sidebar-width);
+      padding: 3rem 2.5rem;
+      border-right: 1px solid var(--border);
+      background: var(--bg-dark);
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+    }
 
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-bright);
+      letter-spacing: -0.02em;
+      margin-bottom: 4rem;
+    }
+
+    nav ul { list-style: none; }
+    nav ul li { margin: 1.6rem 0; }
+    nav ul li a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: color 0.3s, transform 0.3s;
+      display: block;
+    }
+    nav ul li a:hover {
+      color: var(--accent);
+      transform: translateX(8px);
+    }
+
+    /* Contenu principal décalé par la sidebar sur desktop */
     .content-wrapper {
       margin-left: var(--sidebar-width);
-      max-width: 1200px;
     }
 
-    main {
-      padding: 3rem 5rem 6rem;
-      background: transparent;
-    }
-
-    /* Hero inchangé sauf padding-bottom augmenté comme demandé précédemment */
-    .hero {
-      padding: 7rem 0 9rem;
-      max-width: 900px;
-    }
-
-    /* ── Full-bleed boxes ── */
+    /* Full-bleed pour toutes les grandes sections */
     .full-bleed {
       width: 100vw;
       margin-left: calc(-50vw + 50%);
@@ -59,60 +86,243 @@
       margin-right: calc(-50vw + 50%);
     }
 
-    .featured,
-    .newsletter {
-      @extend .full-bleed;   /* ou copie-colle les propriétés ci-dessus si vous n'utilisez pas Sass */
-      padding: 5rem 5vw;     /* padding symétrique responsive */
+    main {
+      padding: 3rem 5rem 6rem;
+    }
+
+    .hero {
+      padding: 7rem 0 9rem;
+      max-width: 900px;
+    }
+
+    .hero-tag {
+      font-size: 0.78rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--highlight);
+      margin-bottom: 1.4rem;
+      font-weight: 500;
+      opacity: 0;
+      animation: fadeUp 1s ease-out 0.2s forwards;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 6vw, 4.6rem);
+      color: var(--text-bright);
+      line-height: 1.1;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      margin-bottom: 1.2rem;
+      opacity: 0;
+      animation: fadeUp 1.2s ease-out 0.4s forwards;
+    }
+
+    .hero p {
+      font-size: 1rem;
+      color: var(--text-dim);
+      max-width: 620px;
+      opacity: 0;
+      animation: fadeUp 1.4s ease-out 0.6s forwards;
+    }
+
+    /* Featured full-bleed jusqu'aux bords */
+    .featured {
+      composes: full-bleed;
+      padding: 5rem 5vw;
       background: var(--surface);
-      border-radius: 0;      /* plus de coins arrondis sur les côtés pour full-bleed */
-      box-shadow: none;      /* shadow peut casser l'effet bord à bord */
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease;
     }
 
-    /* On remet un peu de radius sur desktop si on veut garder un look soft */
-    @media (min-width: 769px) {
-      .featured,
-      .newsletter {
-        border-radius: var(--radius);
-        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-      }
+    .featured:hover { transform: translateY(-5px); }
+
+    .featured > * {
+      max-width: 900px;
+      margin: 0 auto;
     }
 
-    /* Ajustement padding intérieur sur mobile pour ne pas coller les bords */
-    @media (max-width: 768px) {
-      .featured,
-      .newsletter {
-        padding: 4rem 1.5rem;
-      }
-      .content-wrapper { margin-left: 0; }
-      main { padding: 2rem 0; }
-      .hero { padding: 6rem 1.5rem 8rem; }
+    /* Recent section aussi full-bleed */
+    .recent-section {
+      composes: full-bleed;
+      padding: 4rem 5vw 7rem;
+      background: var(--bg-dark);
     }
 
-    /* Les autres styles (boutons, articles, newsletter form, footer...) restent identiques */
-    /* ... copier-coller le reste de votre CSS précédent ici ... */
+    .articles-header {
+      font-size: 0.9rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 2.2rem;
+      font-weight: 600;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
 
-    .featured-label { font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--highlight); margin-bottom: 1.2rem; }
-    .featured-title { font-size: clamp(2rem, 4.5vw, 3.4rem); color: var(--text-bright); line-height: 1.15; font-weight: 700; margin-bottom: 1.4rem; max-width: 900px; }
-    .featured-body { font-size: 1rem; color: var(--text); line-height: 1.75; max-width: 720px; margin-bottom: 2rem; }
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 2.4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
 
-    .read-btn {
-      padding: 0.85rem 1.8rem;
+    .article {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.7s ease-out;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+
+    .article.visible { opacity: 1; transform: translateY(0); }
+    .article:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 36px rgba(0,0,0,0.3);
+    }
+
+    .article-content { padding: 2rem 1.9rem; }
+    .article-meta { font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--highlight); margin-bottom: 0.9rem; }
+    .article-title { font-size: 1.25rem; color: var(--text-bright); font-weight: 600; line-height: 1.3; margin-bottom: 0.9rem; }
+    .article-excerpt { font-size: 0.92rem; color: var(--text-dim); line-height: 1.65; }
+
+    /* Newsletter full-bleed */
+    .newsletter {
+      composes: full-bleed;
+      padding: 9rem 5vw 10rem;
+      background: var(--surface);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .newsletter-inner {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .newsletter-inner h2 {
+      font-size: 2.2rem;
+      color: var(--text-bright);
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+    }
+
+    .newsletter-inner > p {
+      font-size: 1rem;
+      color: var(--text-dim);
+      margin-bottom: 3rem;
+    }
+
+    .newsletter-form {
+      display: flex;
+      gap: 1rem;
+      max-width: 620px;
+      margin: 0 auto;
+    }
+
+    .form-row { flex: 1; }
+    .form-row input {
+      padding: 1.25rem 1.6rem;
+      background: var(--bg-dark);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-bright);
+      font-size: 1.05rem;
+      width: 100%;
+    }
+
+    .form-row input::placeholder {
+      color: #60a5fa;
+      opacity: 0.7;
+    }
+
+    .form-row input:focus { border-color: var(--highlight); outline: none; }
+
+    .form-submit {
+      padding: 1.25rem 2rem;
       background: linear-gradient(to right, var(--highlight), var(--accent));
       border: none;
       border-radius: var(--radius);
       color: white;
       font-weight: 600;
-      font-size: 0.95rem;
+      font-size: 1.05rem;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all 0.25s;
+      white-space: nowrap;
     }
 
-    /* ... suite du CSS (articles, newsletter form, footer) ... */
+    .form-submit:hover { opacity: 0.92; transform: scale(1.05); }
+
+    .newsletter-note {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      margin-top: 1rem;
+    }
+
+    footer {
+      padding: 5rem 5rem 7rem;
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 0.95rem;
+      background: var(--bg-dark);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 1024px) {
+      :root { --sidebar-width: 240px; }
+      main { padding: 3rem 3rem 6rem; }
+      footer { padding: 5rem 3rem 7rem; }
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        position: static;
+        width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        padding: 2rem;
+      }
+      .content-wrapper { margin-left: 0; }
+      main { padding: 2rem 0 4rem; }
+      .featured, .newsletter, .recent-section {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+      }
+      .newsletter-form { flex-direction: column; gap: 1.2rem; }
+      .hero { padding: 6rem 1.5rem 8rem; }
+      .articles-grid { grid-template-columns: 1fr; }
+      .recent-section { padding: 3rem 1.5rem 6rem; }
+      footer { padding: 4rem 1.5rem 6rem; }
+    }
   </style>
 </head>
 <body>
 
-  <!-- Sidebar inchangée -->
+  <aside class="sidebar">
+    <div>
+      <div class="logo">Dan's Thoughts</div>
+      <nav>
+        <ul>
+          <li><a href="#">Essays</a></li>
+          <li><a href="#">Notes</a></li>
+          <li><a href="#">Archive</a></li>
+          <li><a href="#">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </aside>
 
   <div class="content-wrapper">
     <main>
@@ -122,7 +332,7 @@
         <p>I share my thoughts without the bulky restrictions.</p>
       </section>
 
-      <div class="featured full-bleed">
+      <div class="featured">
         <div class="featured-label">This week</div>
         <h2 class="featured-title">The article's title.</h2>
         <p class="featured-body">The article's description.</p>
@@ -132,16 +342,26 @@
       <section class="recent-section">
         <div class="articles-header">Recent</div>
         <div class="articles-grid">
-          <!-- vos articles -->
+          <article class="article">
+            <div class="article-content">
+              <div class="article-meta">Society — February 2026</div>
+              <h2 class="article-title">Is meritocracy disappearing over time?</h2>
+              <p class="article-excerpt">Available soon.</p>
+            </div>
+          </article>
+          <!-- Ajoute tes autres articles ici -->
         </div>
       </section>
 
-      <section class="newsletter full-bleed" id="newsletter">
+      <section class="newsletter" id="newsletter">
         <div class="newsletter-inner">
           <h2>Join the weekly letter.</h2>
           <p>Let's make quality emails trendy again.</p>
           <div class="newsletter-form">
-            <!-- formulaire -->
+            <div class="form-row">
+              <input type="email" id="email" placeholder="you@example.com">
+            </div>
+            <button class="form-submit" onclick="handleSubscribe()">Subscribe</button>
           </div>
           <p class="newsletter-note">No spam. Unsubscribe anytime.</p>
         </div>
@@ -153,6 +373,31 @@
     </footer>
   </div>
 
-  <!-- script inchangé -->
+  <script>
+  function handleSubscribe() {
+    const email = document.getElementById('email').value.trim();
+    if (!email || !email.includes('@')) {
+      document.getElementById('email').style.borderColor = '#ef4444';
+      return;
+    }
+    document.querySelector('.form-submit').textContent = 'Subscribed!';
+    document.querySelector('.form-submit').disabled = true;
+    document.querySelector('.form-submit').style.opacity = '0.7';
+  }
+
+  const articles = document.querySelectorAll('.article');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, index * 120);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  articles.forEach(article => observer.observe(article));
+  </script>
 </body>
 </html>
