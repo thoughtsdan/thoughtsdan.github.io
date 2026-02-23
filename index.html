@@ -30,7 +30,7 @@
       line-height: 1.7;
       min-height: 100vh;
       overflow-x: hidden;
-      scroll-behavior: smooth; /* scroll fluide natif */
+      scroll-behavior: smooth;
     }
 
     .sidebar {
@@ -265,6 +265,7 @@
       color: var(--text-bright);
       font-size: 1.05rem;
       width: 100%;
+      transition: border-color 0.3s;
     }
 
     .form-row input::placeholder {
@@ -273,6 +274,28 @@
     }
 
     .form-row input:focus { border-color: var(--highlight); outline: none; }
+
+    /* État d'erreur */
+    .form-row input.error {
+      border-color: #ef4444;
+      animation: shake 0.35s ease;
+    }
+
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      25%      { transform: translateX(-6px); }
+      75%      { transform: translateX(6px); }
+    }
+
+    .error-msg {
+      font-size: 0.82rem;
+      color: #ef4444;
+      margin-top: 0.5rem;
+      text-align: left;
+      display: none;
+    }
+
+    .error-msg.visible { display: block; }
 
     .form-submit {
       padding: 1.25rem 2rem;
@@ -288,6 +311,7 @@
     }
 
     .form-submit:hover { opacity: 0.92; transform: scale(1.05); }
+    .form-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
     .newsletter-note { font-size: 0.85rem; color: var(--text-dim); margin-top: 1rem; }
 
@@ -327,6 +351,7 @@
         padding-right: 1.5rem;
       }
       .articles-grid { grid-template-columns: 1fr; }
+      .newsletter-form { flex-direction: column; }
       footer { padding: 4rem 1.5rem 6rem; max-width: none; }
     }
   </style>
@@ -380,9 +405,10 @@
           <p>Let's make quality emails trendy again.</p>
           <div class="newsletter-form">
             <div class="form-row">
-              <input type="email" id="email" placeholder="you@example.com">
+              <input type="email" id="email" placeholder="you@example.com" oninput="clearError()">
+              <p class="error-msg" id="error-msg">Please enter a valid email address.</p>
             </div>
-            <button class="form-submit" onclick="handleSubscribe()">Subscribe</button>
+            <button class="form-submit" id="submit-btn" onclick="handleSubscribe()">Subscribe</button>
           </div>
           <p class="newsletter-note">No spam. Unsubscribe anytime.</p>
         </div>
@@ -395,31 +421,49 @@
   </div>
 
   <script>
-    // Fonction de scroll fluide avec offset (pour ne pas coller sous la sidebar)
     function smoothScroll(targetId) {
-      event.preventDefault(); // empêche le saut brutal
+      event.preventDefault();
       const targetElement = document.querySelector(targetId);
       if (targetElement) {
-        const offset = 80; // décalage en pixels (ajuste si besoin)
+        const offset = 80;
         const elementPosition = targetElement.getBoundingClientRect().top;
         const offsetPosition = elementPosition + window.pageYOffset - offset;
-
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth'
-        });
+        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
       }
     }
 
+    // Validation email stricte : doit contenir au moins un char avant @, un domaine, et une extension
+    function isValidEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+    }
+
+    function clearError() {
+      const input = document.getElementById('email');
+      const msg = document.getElementById('error-msg');
+      input.classList.remove('error');
+      msg.classList.remove('visible');
+    }
+
     function handleSubscribe() {
-      const email = document.getElementById('email').value.trim();
-      if (!email || !email.includes('@')) {
-        document.getElementById('email').style.borderColor = '#ef4444';
+      const input = document.getElementById('email');
+      const email = input.value.trim();
+      const msg = document.getElementById('error-msg');
+      const btn = document.getElementById('submit-btn');
+
+      if (!isValidEmail(email)) {
+        input.classList.add('error');
+        msg.classList.add('visible');
+        input.focus();
         return;
       }
-      document.querySelector('.form-submit').textContent = 'Subscribed!';
-      document.querySelector('.form-submit').disabled = true;
-      document.querySelector('.form-submit').style.opacity = '0.7';
+
+      // Email valide → petit feedback visuel puis redirection
+      btn.textContent = 'Redirecting…';
+      btn.disabled = true;
+
+      setTimeout(() => {
+        window.location.href = 'newsletter-thanks.html';
+      }, 600);
     }
 
     // Apparition progressive des articles
