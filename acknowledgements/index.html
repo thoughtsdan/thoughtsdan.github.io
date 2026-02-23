@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thanks for subscribing — Dan's Thoughts</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0a0d14;
+      --surface: #141a24;
+      --border: #1f2836;
+      --separator: rgba(233, 239, 250, 0.08);
+      --text: #a5b3c9;
+      --text-dim: #6a7a95;
+      --text-bright: #e9effa;
+      --highlight: #2563eb;
+      --accent: #3b82f6;
+      --radius: 20px;
+      --sidebar-width: 280px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg-dark);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-weight: 400;
+      line-height: 1.7;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .sidebar {
+      position: fixed;
+      inset: 0 auto 0 0;
+      width: var(--sidebar-width);
+      padding: 3rem 2.5rem;
+      border-right: 1px solid var(--border);
+      background: var(--bg-dark);
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-bright);
+      letter-spacing: -0.02em;
+      margin-bottom: 4rem;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+
+    .logo:hover {
+      color: var(--accent);
+    }
+
+    nav ul { list-style: none; }
+    nav ul li { margin: 1.6rem 0; }
+    nav ul li a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: color 0.3s, transform 0.3s;
+      display: block;
+      cursor: pointer;
+    }
+    nav ul li a:hover {
+      color: var(--accent);
+      transform: translateX(8px);
+    }
+
+    .content-wrapper {
+      margin-left: var(--sidebar-width);
+    }
+
+    main {
+      padding: 3rem 0 6rem;
+    }
+
+    .thanks-section {
+      padding: 7rem 5rem 9rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .thanks-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(37, 99, 235, 0.12);
+      border: 1px solid rgba(59, 130, 246, 0.25);
+      color: var(--accent);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.4rem 1rem;
+      border-radius: 100px;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 1s ease-out 0.2s forwards;
+    }
+
+    .thanks-badge::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.5; transform: scale(0.75); }
+    }
+
+    .thanks-title {
+      font-size: clamp(2.8rem, 6vw, 4.6rem);
+      color: var(--text-bright);
+      line-height: 1.1;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 1.2s ease-out 0.4s forwards;
+    }
+
+    .thanks-text {
+      font-size: 1.1rem;
+      color: var(--text);
+      line-height: 1.8;
+      max-width: 720px;
+      opacity: 0;
+      animation: fadeUp 1.4s ease-out 0.6s forwards;
+    }
+
+    .thanks-text p {
+      margin-bottom: 1.8rem;
+    }
+
+    .divider {
+      width: 48px;
+      height: 2px;
+      background: var(--accent);
+      margin: 3rem 0;
+      opacity: 0;
+      animation: fadeUp 1.4s ease-out 0.7s forwards;
+    }
+
+    .what-to-expect {
+      opacity: 0;
+      animation: fadeUp 1.4s ease-out 0.8s forwards;
+    }
+
+    .what-to-expect h2 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--text-bright);
+      letter-spacing: -0.01em;
+      margin-bottom: 1.6rem;
+    }
+
+    .expect-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .expect-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      font-size: 1rem;
+      color: var(--text);
+    }
+
+    .expect-list li .dot {
+      width: 6px;
+      height: 6px;
+      min-width: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      margin-top: 0.65rem;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-top: 3.5rem;
+      padding: 0.75rem 1.6rem;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      color: var(--text-dim);
+      font-size: 0.95rem;
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+      transition: border-color 0.3s, color 0.3s, transform 0.3s;
+      opacity: 0;
+      animation: fadeUp 1.4s ease-out 1s forwards;
+    }
+
+    .back-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateX(-4px);
+    }
+
+    .back-btn svg {
+      transition: transform 0.3s;
+    }
+
+    .back-btn:hover svg {
+      transform: translateX(-3px);
+    }
+
+    footer {
+      padding: 5rem 5rem 7rem;
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 0.95rem;
+      background: var(--bg-dark);
+      max-width: 1200px;
+      margin: 0 auto;
+      border-top: 1px solid var(--separator);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 1024px) {
+      :root { --sidebar-width: 240px; }
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        position: static;
+        width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        padding: 2rem;
+      }
+      .content-wrapper { margin-left: 0; }
+      .thanks-section { padding: 6rem 1.5rem 8rem; }
+      footer { padding: 4rem 1.5rem 6rem; max-width: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <aside class="sidebar">
+    <div>
+      <div class="logo" onclick="handleLogoClick()">Dan's Thoughts</div>
+      <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/about.html">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </aside>
+
+  <div class="content-wrapper">
+    <main>
+      <section class="thanks-section">
+
+        <div class="thanks-badge">Newsletter</div>
+
+        <h1 class="thanks-title">You're in.</h1>
+
+        <div class="thanks-text">
+          <p>Thanks for subscribing to Dan's Thoughts. You just made a decision worth making.</p>
+          <p>No noise. No spam. Just raw, honest thoughts on building a business from the ground up — what works, what doesn't, and what it actually takes.</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="what-to-expect">
+          <h2>What to expect</h2>
+          <ul class="expect-list">
+            <li>
+              <span class="dot"></span>
+              <span>Real updates on my journey to reach $5,000/month — the wins and the setbacks.</span>
+            </li>
+            <li>
+              <span class="dot"></span>
+              <span>Harsh truths about society, money, and the mindset shifts that matter.</span>
+            </li>
+            <li>
+              <span class="dot"></span>
+              <span>Lessons learned from consistent, hard work — no shortcuts, no fluff.</span>
+            </li>
+            <li>
+              <span class="dot"></span>
+              <span>Occasional essays worth rereading.</span>
+            </li>
+          </ul>
+        </div>
+
+        <a href="/" class="back-btn">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Back to home
+        </a>
+
+      </section>
+    </main>
+
+    <footer>
+      <span>© 2026 Dan's Thoughts • Written with devotion.</span>
+    </footer>
+  </div>
+
+  <script>
+    function handleLogoClick() {
+      if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
+        window.location.reload();
+      } else {
+        window.location.href = '/';
+      }
+    }
+  </script>
+</body>
+</html>
