@@ -7,13 +7,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-dark:    #0f1117;     /* fond gris très foncé uniforme */
-      --surface:    #161b22;     /* légèrement plus clair pour les cartes / blocs */
+      --bg-dark:    #0f1117;
+      --surface:    #161b22;
       --border:     #21262d;
       --text:       #a0a8b8;
       --text-dim:   #6e7681;
       --text-bright:#e6edf3;
-      --highlight:  #58a6ff;     /* bleu GitHub-like, moderne */
+      --highlight:  #58a6ff;
       --accent:     #79c0ff;
       --radius:     16px;
     }
@@ -33,20 +33,17 @@
       min-height: 100vh;
     }
 
-    /* ── SIDEBAR NAV ── */
+    /* SIDEBAR */
     .sidebar {
       position: fixed;
-      left: 0;
-      top: 0;
-      bottom: 0;
+      left: 0; top: 0; bottom: 0;
       width: 280px;
       padding: 3rem 2.5rem;
       border-right: 1px solid var(--border);
-      background: var(--bg-dark);   /* même fond que le body */
+      background: var(--bg-dark);
       z-index: 100;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
     }
 
     .logo {
@@ -57,14 +54,8 @@
       margin-bottom: 4rem;
     }
 
-    nav ul {
-      list-style: none;
-    }
-
-    nav ul li {
-      margin: 1.4rem 0;
-    }
-
+    nav ul { list-style: none; }
+    nav ul li { margin: 1.4rem 0; }
     nav ul li a {
       color: var(--text-dim);
       text-decoration: none;
@@ -73,25 +64,43 @@
       transition: color 0.2s, transform 0.2s;
       display: block;
     }
-
     nav ul li a:hover {
       color: var(--accent);
       transform: translateX(6px);
     }
 
-    /* ── MAIN CONTENT ── */
+    /* MAIN */
     main {
       margin-left: 280px;
-      padding: 4rem 5rem 6rem;
+      padding: 4rem 5rem 8rem;
       max-width: 1200px;
       background: var(--bg-dark);
     }
 
+    /* ANIMATIONS SOBRES */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeScale {
+      from { opacity: 0; transform: scale(0.98); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    .animate-fade-up  { animation: fadeUp 0.9s ease-out forwards; }
+    .animate-fade-scale { animation: fadeScale 1.1s ease-out forwards; }
+
     /* HERO */
     .hero {
-      padding: 8rem 0 6rem;
+      padding: 10rem 0 7rem;
       max-width: 900px;
     }
+
+    .hero > * { opacity: 0; }
+    .hero-tag     { animation: fadeUp 0.8s ease-out 0.1s forwards; }
+    .hero h1      { animation: fadeUp 0.9s ease-out 0.25s forwards; }
+    .hero p       { animation: fadeUp 1s ease-out 0.4s forwards; }
 
     .hero-tag {
       font-size: 0.82rem;
@@ -120,26 +129,24 @@
     /* FEATURED */
     .featured {
       position: relative;
-      margin: 0 -5rem 5rem;
+      margin: 0 -5rem 6rem;
       padding: 6rem 5rem;
-      background: var(--surface);   /* un tout petit peu plus clair pour le détacher */
+      background: var(--surface);
       border-radius: 0;
       overflow: hidden;
-      isolation: isolate;
+      opacity: 0;
+      animation: fadeScale 1.2s ease-out 0.6s forwards;
     }
 
     .featured::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at 30% 70%, rgba(88,166,255,0.06) 0%, transparent 70%);
+      background: radial-gradient(circle at 30% 70%, rgba(88,166,255,0.05) 0%, transparent 70%);
       z-index: 0;
     }
 
-    .featured > * {
-      position: relative;
-      z-index: 1;
-    }
+    .featured > * { position: relative; z-index: 1; }
 
     .featured-label {
       font-size: 0.78rem;
@@ -184,9 +191,9 @@
       transform: translateY(-2px);
     }
 
-    /* RECENT ARTICLES */
+    /* RECENT */
     .recent-section {
-      margin: 6rem 0;
+      margin: 7rem 0;
     }
 
     .articles-header {
@@ -194,14 +201,14 @@
       letter-spacing: 0.25em;
       text-transform: uppercase;
       color: var(--text-dim);
-      margin-bottom: 2.5rem;
+      margin-bottom: 2.8rem;
       font-weight: 600;
     }
 
     .articles-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-      gap: 2.2rem;
+      gap: 2.4rem;
     }
 
     .article {
@@ -209,8 +216,14 @@
       border: 1px solid var(--border);
       border-radius: var(--radius);
       overflow: hidden;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      cursor: pointer;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.7s ease-out;
+    }
+
+    .article.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .article:hover {
@@ -219,7 +232,7 @@
     }
 
     .article-content {
-      padding: 1.8rem 1.9rem;
+      padding: 1.9rem;
     }
 
     .article-meta {
@@ -246,7 +259,7 @@
 
     /* NEWSLETTER */
     .newsletter {
-      padding: 8rem 0;
+      padding: 9rem 0 10rem;
       background: var(--surface);
       margin: 0 -5rem;
     }
@@ -302,7 +315,7 @@
       font-weight: 600;
       font-size: 1rem;
       cursor: pointer;
-      transition: opacity 0.2s, transform 0.2s;
+      transition: all 0.25s;
     }
 
     .form-submit:hover {
@@ -310,12 +323,12 @@
       transform: scale(1.02);
     }
 
-    /* FOOTER */
+    /* FOOTER – centré parfaitement */
     footer {
-      padding: 4rem 5rem 6rem;
+      padding: 3rem 0 5rem;
       text-align: center;
       color: var(--text-dim);
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       border-top: 1px solid var(--border);
       background: var(--bg-dark);
     }
@@ -339,8 +352,7 @@
         margin-left: 0;
         padding: 2rem;
       }
-      .featured { margin: 0 -2rem; padding: 5rem 2rem; }
-      .newsletter { margin: 0 -2rem; padding: 6rem 2rem; }
+      .featured, .newsletter { margin: 0 -2rem; padding-left: 2rem; padding-right: 2rem; }
     }
   </style>
 </head>
@@ -384,6 +396,7 @@
             <p class="article-excerpt">Available soon.</p>
           </div>
         </article>
+        <!-- Ajoute d'autres articles ici pour voir l'effet stagger -->
       </div>
     </section>
 
@@ -404,10 +417,11 @@
   </main>
 
   <footer>
-    <span>© 2026 Dan's Thoughts • Written with devotion.</span>
+    © 2026 Dan's Thoughts • Written with devotion.
   </footer>
 
   <script>
+  // Newsletter
   function handleSubscribe() {
     const email = document.getElementById('email').value;
     if (!email || !email.includes('@')) {
@@ -417,6 +431,21 @@
     document.querySelector('.form-submit').style.display = 'none';
     document.getElementById('successMsg').style.display = 'block';
   }
+
+  // Apparition progressive des articles au scroll (très léger)
+  const articles = document.querySelectorAll('.article');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, index * 120); // stagger léger
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  articles.forEach(article => observer.observe(article));
   </script>
 
 </body>
