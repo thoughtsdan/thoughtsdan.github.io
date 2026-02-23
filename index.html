@@ -10,7 +10,7 @@
       --bg-dark: #0a0d14;
       --surface: #141a24;
       --border: #1f2836;
-      --separator: rgba(233, 239, 250, 0.08); /* séparation très discrète, presque invisible */
+      --separator: rgba(233, 239, 250, 0.08);
       --text: #a5b3c9;
       --text-dim: #6a7a95;
       --text-bright:#e9effa;
@@ -30,6 +30,7 @@
       line-height: 1.7;
       min-height: 100vh;
       overflow-x: hidden;
+      scroll-behavior: smooth; /* scroll fluide natif */
     }
 
     .sidebar {
@@ -61,6 +62,7 @@
       font-weight: 500;
       transition: color 0.3s, transform 0.3s;
       display: block;
+      cursor: pointer;
     }
     nav ul li a:hover {
       color: var(--accent);
@@ -79,7 +81,7 @@
       padding: 7rem 5rem 9rem;
       max-width: 900px;
       margin: 0 auto;
-      border-bottom: 1px solid var(--separator); /* séparation discrète */
+      border-bottom: 1px solid var(--separator);
     }
 
     .hero-tag {
@@ -112,7 +114,6 @@
       animation: fadeUp 1.4s ease-out 0.6s forwards;
     }
 
-    /* Full-bleed pour toutes les grandes sections */
     .full-bleed {
       width: 100vw;
       margin-left: calc(-50vw + 50%);
@@ -235,8 +236,8 @@
 
     .newsletter {
       padding: 9rem 5vw 10rem;
-      background: var(--bg-dark); /* ← même fond que le reste du site */
-      border-bottom: 1px solid var(--separator); /* séparation discrète */
+      background: var(--bg-dark);
+      border-bottom: 1px solid var(--separator);
     }
 
     .newsletter-inner {
@@ -337,8 +338,8 @@
       <div class="logo">Dan's Thoughts</div>
       <nav>
         <ul>
-          <li><a href="#">Essays</a></li>
-          <li><a href="#">Newsletter</a></li>
+          <li><a href="#recent" onclick="smoothScroll('#recent')">Essays</a></li>
+          <li><a href="#newsletter" onclick="smoothScroll('#newsletter')">Newsletter</a></li>
           <li><a href="#">About</a></li>
         </ul>
       </nav>
@@ -353,10 +354,9 @@
         <p>I share my thoughts without the bulky restrictions.</p>
       </section>
 
-      <section class="recent-section">
+      <section class="recent-section" id="recent">
         <div class="articles-header">Recent</div>
         <div class="articles-grid">
-          
           <article class="article">
             <div class="article-content">
               <div class="article-meta">Society — February 2026</div>
@@ -364,7 +364,6 @@
               <p class="article-excerpt">Available soon.</p>
             </div>
           </article>
-
           <article class="article">
             <div class="article-content">
               <div class="article-meta">Sociology — February 2026</div>
@@ -372,8 +371,6 @@
               <p class="article-excerpt">Available soon.</p>
             </div>
           </article>
-
-          
         </div>
       </section>
 
@@ -398,30 +395,47 @@
   </div>
 
   <script>
-  function handleSubscribe() {
-    const email = document.getElementById('email').value.trim();
-    if (!email || !email.includes('@')) {
-      document.getElementById('email').style.borderColor = '#ef4444';
-      return;
-    }
-    document.querySelector('.form-submit').textContent = 'Subscribed!';
-    document.querySelector('.form-submit').disabled = true;
-    document.querySelector('.form-submit').style.opacity = '0.7';
-  }
+    // Fonction de scroll fluide avec offset (pour ne pas coller sous la sidebar)
+    function smoothScroll(targetId) {
+      event.preventDefault(); // empêche le saut brutal
+      const targetElement = document.querySelector(targetId);
+      if (targetElement) {
+        const offset = 80; // décalage en pixels (ajuste si besoin)
+        const elementPosition = targetElement.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - offset;
 
-  const articles = document.querySelectorAll('.article');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, index) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => {
-          entry.target.classList.add('visible');
-        }, index * 120);
-        observer.unobserve(entry.target);
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
       }
-    });
-  }, { threshold: 0.1 });
+    }
 
-  articles.forEach(article => observer.observe(article));
+    function handleSubscribe() {
+      const email = document.getElementById('email').value.trim();
+      if (!email || !email.includes('@')) {
+        document.getElementById('email').style.borderColor = '#ef4444';
+        return;
+      }
+      document.querySelector('.form-submit').textContent = 'Subscribed!';
+      document.querySelector('.form-submit').disabled = true;
+      document.querySelector('.form-submit').style.opacity = '0.7';
+    }
+
+    // Apparition progressive des articles
+    const articles = document.querySelectorAll('.article');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, index * 120);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    articles.forEach(article => observer.observe(article));
   </script>
 </body>
 </html>
