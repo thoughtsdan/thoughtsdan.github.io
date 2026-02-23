@@ -19,11 +19,7 @@
       --sidebar-width: 280px;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       background: var(--bg-dark);
@@ -35,7 +31,6 @@
       overflow-x: hidden;
     }
 
-    /* Sidebar fixe à gauche sur desktop */
     .sidebar {
       position: fixed;
       inset: 0 auto 0 0;
@@ -71,28 +66,19 @@
       transform: translateX(8px);
     }
 
-    /* Contenu principal décalé par la sidebar sur desktop */
     .content-wrapper {
       margin-left: var(--sidebar-width);
     }
 
-    /* Full-bleed pour toutes les grandes sections */
-    .full-bleed {
-      width: 100vw;
-      margin-left: calc(-50vw + 50%);
-      position: relative;
-      left: 50%;
-      right: 50%;
-      margin-right: calc(-50vw + 50%);
-    }
-
     main {
-      padding: 3rem 5rem 6rem;
+      padding: 3rem 0 6rem; /* on enlève le padding latéral ici pour laisser les sections gérer elles-mêmes */
     }
 
+    /* Hero */
     .hero {
-      padding: 7rem 0 9rem;
+      padding: 7rem 5rem 9rem;
       max-width: 900px;
+      margin: 0 auto;
     }
 
     .hero-tag {
@@ -125,9 +111,23 @@
       animation: fadeUp 1.4s ease-out 0.6s forwards;
     }
 
-    /* Featured full-bleed jusqu'aux bords */
-    .featured {
+    /* Full-bleed pour featured, recent et newsletter */
+    .full-bleed {
+      width: 100vw;
+      margin-left: calc(-50vw + 50%);
+      position: relative;
+      left: 50%;
+      right: 50%;
+      margin-right: calc(-50vw + 50%);
+    }
+
+    .featured,
+    .recent-section,
+    .newsletter {
       composes: full-bleed;
+    }
+
+    .featured {
       padding: 5rem 5vw;
       background: var(--surface);
       box-shadow: 0 10px 30px rgba(0,0,0,0.3);
@@ -141,10 +141,41 @@
       margin: 0 auto;
     }
 
-    /* Recent section aussi full-bleed */
+    .featured-label { font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--highlight); margin-bottom: 1.2rem; }
+    .featured-title { font-size: clamp(2rem, 4.5vw, 3.4rem); color: var(--text-bright); line-height: 1.15; font-weight: 700; margin-bottom: 1.4rem; }
+    .featured-body { font-size: 1rem; color: var(--text); line-height: 1.75; max-width: 720px; margin-bottom: 2rem; }
+
+    /* Bouton refait proprement */
+    .read-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.9rem 1.9rem;
+      background: linear-gradient(90deg, var(--highlight), var(--accent));
+      color: white;
+      font-weight: 600;
+      font-size: 0.98rem;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+      text-decoration: none;
+    }
+
+    .read-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(37, 99, 235, 0.45);
+    }
+
+    .read-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 3px 10px rgba(37, 99, 235, 0.35);
+    }
+
+    /* Recent section très proche des bords */
     .recent-section {
-      composes: full-bleed;
-      padding: 4rem 5vw 7rem;
+      padding: 3rem 5vw 7rem;
       background: var(--bg-dark);
     }
 
@@ -192,7 +223,6 @@
 
     /* Newsletter full-bleed */
     .newsletter {
-      composes: full-bleed;
       padding: 9rem 5vw 10rem;
       background: var(--surface);
       box-shadow: 0 10px 30px rgba(0,0,0,0.3);
@@ -204,18 +234,8 @@
       text-align: center;
     }
 
-    .newsletter-inner h2 {
-      font-size: 2.2rem;
-      color: var(--text-bright);
-      font-weight: 700;
-      margin-bottom: 1.2rem;
-    }
-
-    .newsletter-inner > p {
-      font-size: 1rem;
-      color: var(--text-dim);
-      margin-bottom: 3rem;
-    }
+    .newsletter-inner h2 { font-size: 2.2rem; color: var(--text-bright); font-weight: 700; margin-bottom: 1.2rem; }
+    .newsletter-inner > p { font-size: 1rem; color: var(--text-dim); margin-bottom: 3rem; }
 
     .newsletter-form {
       display: flex;
@@ -257,11 +277,7 @@
 
     .form-submit:hover { opacity: 0.92; transform: scale(1.05); }
 
-    .newsletter-note {
-      font-size: 0.85rem;
-      color: var(--text-dim);
-      margin-top: 1rem;
-    }
+    .newsletter-note { font-size: 0.85rem; color: var(--text-dim); margin-top: 1rem; }
 
     footer {
       padding: 5rem 5rem 7rem;
@@ -278,11 +294,8 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* ── Responsive ── */
     @media (max-width: 1024px) {
       :root { --sidebar-width: 240px; }
-      main { padding: 3rem 3rem 6rem; }
-      footer { padding: 5rem 3rem 7rem; }
     }
 
     @media (max-width: 768px) {
@@ -295,16 +308,14 @@
         padding: 2rem;
       }
       .content-wrapper { margin-left: 0; }
-      main { padding: 2rem 0 4rem; }
-      .featured, .newsletter, .recent-section {
+      main { padding: 0; }
+      .hero { padding: 6rem 1.5rem 8rem; }
+      .featured, .recent-section, .newsletter {
         padding-left: 1.5rem;
         padding-right: 1.5rem;
       }
-      .newsletter-form { flex-direction: column; gap: 1.2rem; }
-      .hero { padding: 6rem 1.5rem 8rem; }
       .articles-grid { grid-template-columns: 1fr; }
-      .recent-section { padding: 3rem 1.5rem 6rem; }
-      footer { padding: 4rem 1.5rem 6rem; }
+      footer { padding: 4rem 1.5rem 6rem; max-width: none; }
     }
   </style>
 </head>
@@ -349,7 +360,7 @@
               <p class="article-excerpt">Available soon.</p>
             </div>
           </article>
-          <!-- Ajoute tes autres articles ici -->
+          <!-- Ajoute d'autres articles ici si besoin -->
         </div>
       </section>
 
