@@ -10,6 +10,7 @@
       --bg-dark: #0a0d14;
       --surface: #141a24;
       --border: #1f2836;
+      --separator: rgba(233, 239, 250, 0.08); /* séparation très discrète, presque invisible */
       --text: #a5b3c9;
       --text-dim: #6a7a95;
       --text-bright:#e9effa;
@@ -18,7 +19,9 @@
       --radius: 20px;
       --sidebar-width: 280px;
     }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
       background: var(--bg-dark);
       color: var(--text);
@@ -28,6 +31,7 @@
       min-height: 100vh;
       overflow-x: hidden;
     }
+
     .sidebar {
       position: fixed;
       inset: 0 auto 0 0;
@@ -39,6 +43,7 @@
       display: flex;
       flex-direction: column;
     }
+
     .logo {
       font-size: 1.5rem;
       font-weight: 700;
@@ -46,6 +51,7 @@
       letter-spacing: -0.02em;
       margin-bottom: 4rem;
     }
+
     nav ul { list-style: none; }
     nav ul li { margin: 1.6rem 0; }
     nav ul li a {
@@ -60,17 +66,22 @@
       color: var(--accent);
       transform: translateX(8px);
     }
+
     .content-wrapper {
       margin-left: var(--sidebar-width);
     }
+
     main {
       padding: 3rem 0 6rem;
     }
+
     .hero {
       padding: 7rem 5rem 9rem;
       max-width: 900px;
       margin: 0 auto;
+      border-bottom: 1px solid var(--separator); /* séparation discrète */
     }
+
     .hero-tag {
       font-size: 0.78rem;
       letter-spacing: 0.2em;
@@ -81,6 +92,7 @@
       opacity: 0;
       animation: fadeUp 1s ease-out 0.2s forwards;
     }
+
     .hero h1 {
       font-size: clamp(2.8rem, 6vw, 4.6rem);
       color: var(--text-bright);
@@ -91,6 +103,7 @@
       opacity: 0;
       animation: fadeUp 1.2s ease-out 0.4s forwards;
     }
+
     .hero p {
       font-size: 1rem;
       color: var(--text-dim);
@@ -98,7 +111,8 @@
       opacity: 0;
       animation: fadeUp 1.4s ease-out 0.6s forwards;
     }
-    /* Full-bleed pour featured, recent et newsletter */
+
+    /* Full-bleed pour toutes les grandes sections */
     .full-bleed {
       width: 100vw;
       margin-left: calc(-50vw + 50%);
@@ -107,22 +121,28 @@
       right: 50%;
       margin-right: calc(-50vw + 50%);
     }
+
     .featured,
     .recent-section,
     .newsletter {
       composes: full-bleed;
     }
+
     .featured {
       padding: 5rem 5vw;
       background: var(--surface);
       box-shadow: 0 10px 30px rgba(0,0,0,0.3);
       transition: transform 0.3s ease;
+      border-bottom: 1px solid var(--separator);
     }
+
     .featured:hover { transform: translateY(-5px); }
+
     .featured > * {
       max-width: 900px;
       margin: 0 auto;
     }
+
     .featured-title {
       font-size: clamp(2rem, 4.5vw, 3.4rem);
       color: var(--text-bright);
@@ -130,6 +150,7 @@
       font-weight: 700;
       margin-bottom: 1.4rem;
     }
+
     .featured-body {
       font-size: 1rem;
       color: var(--text);
@@ -137,6 +158,7 @@
       max-width: 720px;
       margin-bottom: 2rem;
     }
+
     .read-btn {
       display: inline-flex;
       align-items: center;
@@ -152,18 +174,23 @@
       transition: all 0.3s ease;
       box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
     }
+
     .read-btn:hover {
       transform: translateY(-3px);
       box-shadow: 0 8px 24px rgba(37, 99, 235, 0.45);
     }
+
     .read-btn:active {
       transform: translateY(0);
       box-shadow: 0 3px 10px rgba(37, 99, 235, 0.35);
     }
+
     .recent-section {
-      padding: 3rem 5vw 7rem;
+      padding: 4rem 5vw 7rem;
       background: var(--bg-dark);
+      border-bottom: 1px solid var(--separator);
     }
+
     .articles-header {
       font-size: 0.9rem;
       letter-spacing: 0.25em;
@@ -175,6 +202,7 @@
       margin-left: auto;
       margin-right: auto;
     }
+
     .articles-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
@@ -182,6 +210,7 @@
       max-width: 1200px;
       margin: 0 auto;
     }
+
     .article {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -192,33 +221,40 @@
       transition: all 0.7s ease-out;
       box-shadow: 0 8px 24px rgba(0,0,0,0.2);
     }
+
     .article.visible { opacity: 1; transform: translateY(0); }
     .article:hover {
       transform: translateY(-8px);
       box-shadow: 0 12px 36px rgba(0,0,0,0.3);
     }
+
     .article-content { padding: 2rem 1.9rem; }
     .article-meta { font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--highlight); margin-bottom: 0.9rem; }
     .article-title { font-size: 1.25rem; color: var(--text-bright); font-weight: 600; line-height: 1.3; margin-bottom: 0.9rem; }
     .article-excerpt { font-size: 0.92rem; color: var(--text-dim); line-height: 1.65; }
+
     .newsletter {
       padding: 9rem 5vw 10rem;
-      background: var(--bg-dark); /* ← Changement ici : même fond que le body / recent */
-      box-shadow: none; /* on enlève l'ombre pour plus d'homogénéité */
+      background: var(--bg-dark); /* ← même fond que le reste du site */
+      border-bottom: 1px solid var(--separator); /* séparation discrète */
     }
+
     .newsletter-inner {
       max-width: 800px;
       margin: 0 auto;
       text-align: center;
     }
+
     .newsletter-inner h2 { font-size: 2.2rem; color: var(--text-bright); font-weight: 700; margin-bottom: 1.2rem; }
     .newsletter-inner > p { font-size: 1rem; color: var(--text-dim); margin-bottom: 3rem; }
+
     .newsletter-form {
       display: flex;
       gap: 1rem;
       max-width: 620px;
       margin: 0 auto;
     }
+
     .form-row { flex: 1; }
     .form-row input {
       padding: 1.25rem 1.6rem;
@@ -229,11 +265,14 @@
       font-size: 1.05rem;
       width: 100%;
     }
+
     .form-row input::placeholder {
       color: #60a5fa;
       opacity: 0.7;
     }
+
     .form-row input:focus { border-color: var(--highlight); outline: none; }
+
     .form-submit {
       padding: 1.25rem 2rem;
       background: linear-gradient(to right, var(--highlight), var(--accent));
@@ -246,8 +285,11 @@
       transition: all 0.25s;
       white-space: nowrap;
     }
+
     .form-submit:hover { opacity: 0.92; transform: scale(1.05); }
+
     .newsletter-note { font-size: 0.85rem; color: var(--text-dim); margin-top: 1rem; }
+
     footer {
       padding: 5rem 5rem 7rem;
       text-align: center;
@@ -257,13 +299,16 @@
       max-width: 1200px;
       margin: 0 auto;
     }
+
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
+
     @media (max-width: 1024px) {
       :root { --sidebar-width: 240px; }
     }
+
     @media (max-width: 768px) {
       .sidebar {
         position: static;
@@ -286,6 +331,7 @@
   </style>
 </head>
 <body>
+
   <aside class="sidebar">
     <div>
       <div class="logo">Dan's Thoughts</div>
@@ -298,6 +344,7 @@
       </nav>
     </div>
   </aside>
+
   <div class="content-wrapper">
     <main>
       <section class="hero">
@@ -305,7 +352,7 @@
         <h1>Contradiction is the <br>gear of free speech.</h1>
         <p>I share my thoughts without the bulky restrictions.</p>
       </section>
-     
+
       <section class="recent-section">
         <div class="articles-header">Recent</div>
         <div class="articles-grid">
@@ -318,6 +365,7 @@
           </article>
         </div>
       </section>
+
       <section class="newsletter" id="newsletter">
         <div class="newsletter-inner">
           <h2>Join the weekly letter.</h2>
@@ -332,10 +380,12 @@
         </div>
       </section>
     </main>
+
     <footer>
       <span>© 2026 Dan's Thoughts • Written with devotion.</span>
     </footer>
   </div>
+
   <script>
   function handleSubscribe() {
     const email = document.getElementById('email').value.trim();
@@ -347,6 +397,7 @@
     document.querySelector('.form-submit').disabled = true;
     document.querySelector('.form-submit').style.opacity = '0.7';
   }
+
   const articles = document.querySelectorAll('.article');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry, index) => {
@@ -358,6 +409,7 @@
       }
     });
   }, { threshold: 0.1 });
+
   articles.forEach(article => observer.observe(article));
   </script>
 </body>
