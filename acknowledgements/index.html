@@ -17,7 +17,6 @@
       --highlight: #2563eb;
       --accent: #3b82f6;
       --radius: 20px;
-      --sidebar-width: 280px;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -30,52 +29,6 @@
       line-height: 1.7;
       min-height: 100vh;
       overflow-x: hidden;
-    }
-
-    .sidebar {
-      position: fixed;
-      inset: 0 auto 0 0;
-      width: var(--sidebar-width);
-      padding: 3rem 2.5rem;
-      border-right: 1px solid var(--border);
-      background: var(--bg-dark);
-      z-index: 100;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .logo {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--text-bright);
-      letter-spacing: -0.02em;
-      margin-bottom: 4rem;
-      cursor: pointer;
-      transition: color 0.3s;
-    }
-
-    .logo:hover {
-      color: var(--accent);
-    }
-
-    nav ul { list-style: none; }
-    nav ul li { margin: 1.6rem 0; }
-    nav ul li a {
-      color: var(--text-dim);
-      text-decoration: none;
-      font-size: 1rem;
-      font-weight: 500;
-      transition: color 0.3s, transform 0.3s;
-      display: block;
-      cursor: pointer;
-    }
-    nav ul li a:hover {
-      color: var(--accent);
-      transform: translateX(8px);
-    }
-
-    .content-wrapper {
-      margin-left: var(--sidebar-width);
     }
 
     main {
@@ -239,20 +192,7 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    @media (max-width: 1024px) {
-      :root { --sidebar-width: 240px; }
-    }
-
     @media (max-width: 768px) {
-      .sidebar {
-        position: static;
-        width: 100%;
-        height: auto;
-        border-right: none;
-        border-bottom: 1px solid var(--border);
-        padding: 2rem;
-      }
-      .content-wrapper { margin-left: 0; }
       .thanks-section { padding: 6rem 1.5rem 8rem; }
       footer { padding: 4rem 1.5rem 6rem; max-width: none; }
     }
@@ -260,78 +200,55 @@
 </head>
 <body>
 
-  <aside class="sidebar">
-    <div>
-      <div class="logo" onclick="handleLogoClick()">Dan's Thoughts</div>
-      <nav>
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/about.html">About</a></li>
+  <main>
+    <section class="thanks-section">
+
+      <div class="thanks-badge">Newsletter</div>
+
+      <h1 class="thanks-title">You're in.</h1>
+
+      <div class="thanks-text">
+        <p>Thanks for subscribing to Dan's Thoughts. You just made a decision worth making.</p>
+        <p>No noise. No spam. Just raw, honest thoughts on building a business from the ground up — what works, what doesn't, and what it actually takes.</p>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="what-to-expect">
+        <h2>What to expect</h2>
+        <ul class="expect-list">
+          <li>
+            <span class="dot"></span>
+            <span>Real updates on my journey to reach $5,000/month — the wins and the setbacks.</span>
+          </li>
+          <li>
+            <span class="dot"></span>
+            <span>Harsh truths about society, money, and the mindset shifts that matter.</span>
+          </li>
+          <li>
+            <span class="dot"></span>
+            <span>Lessons learned from consistent, hard work — no shortcuts, no fluff.</span>
+          </li>
+          <li>
+            <span class="dot"></span>
+            <span>Occasional essays worth rereading.</span>
+          </li>
         </ul>
-      </nav>
-    </div>
-  </aside>
+      </div>
 
-  <div class="content-wrapper">
-    <main>
-      <section class="thanks-section">
+      <a href="/" class="back-btn">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Back to home
+      </a>
 
-        <div class="thanks-badge">Newsletter</div>
+    </section>
+  </main>
 
-        <h1 class="thanks-title">You're in.</h1>
+  <footer>
+    <span>© 2026 Dan's Thoughts • Written with devotion.</span>
+  </footer>
 
-        <div class="thanks-text">
-          <p>Thanks for subscribing to Dan's Thoughts. You just made a decision worth making.</p>
-          <p>No noise. No spam. Just raw, honest thoughts on building a business from the ground up — what works, what doesn't, and what it actually takes.</p>
-        </div>
-
-        <div class="divider"></div>
-
-        <div class="what-to-expect">
-          <h2>What to expect</h2>
-          <ul class="expect-list">
-            <li>
-              <span class="dot"></span>
-              <span>Real updates on my journey to reach $5,000/month — the wins and the setbacks.</span>
-            </li>
-            <li>
-              <span class="dot"></span>
-              <span>Harsh truths about society, money, and the mindset shifts that matter.</span>
-            </li>
-            <li>
-              <span class="dot"></span>
-              <span>Lessons learned from consistent, hard work — no shortcuts, no fluff.</span>
-            </li>
-            <li>
-              <span class="dot"></span>
-              <span>Occasional essays worth rereading.</span>
-            </li>
-          </ul>
-        </div>
-
-        <a href="/" class="back-btn">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          Back to home
-        </a>
-
-      </section>
-    </main>
-
-    <footer>
-      <span>© 2026 Dan's Thoughts • Written with devotion.</span>
-    </footer>
-  </div>
-
-  <script>
-    function handleLogoClick() {
-      if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
-        window.location.reload();
-      } else {
-        window.location.href = '/';
-      }
-    }
-  </script>
 </body>
 </html>
