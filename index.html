@@ -72,12 +72,12 @@
     /* MAIN */
     main {
       margin-left: 280px;
-      padding: 4rem 5rem 8rem;
+      padding: 4rem 5rem 6rem;
       max-width: 1200px;
       background: var(--bg-dark);
     }
 
-    /* ANIMATIONS SOBRES */
+    /* ANIMATIONS */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -132,7 +132,6 @@
       margin: 0 -5rem 6rem;
       padding: 6rem 5rem;
       background: var(--surface);
-      border-radius: 0;
       overflow: hidden;
       opacity: 0;
       animation: fadeScale 1.2s ease-out 0.6s forwards;
@@ -191,7 +190,7 @@
       transform: translateY(-2px);
     }
 
-    /* RECENT */
+    /* RECENT ARTICLES */
     .recent-section {
       margin: 7rem 0;
     }
@@ -323,14 +322,19 @@
       transform: scale(1.02);
     }
 
-    /* FOOTER – centré parfaitement */
+    /* FOOTER – version épurée et centrée */
     footer {
-      padding: 3rem 0 5rem;
+      padding: 4rem 2rem 6rem;
       text-align: center;
       color: var(--text-dim);
       font-size: 0.9rem;
-      border-top: 1px solid var(--border);
       background: var(--bg-dark);
+      /* pas de bordure supérieure */
+    }
+
+    footer span {
+      display: inline-block;
+      line-height: 1.6;
     }
 
     /* Responsive */
@@ -352,7 +356,12 @@
         margin-left: 0;
         padding: 2rem;
       }
-      .featured, .newsletter { margin: 0 -2rem; padding-left: 2rem; padding-right: 2rem; }
+      .featured, .newsletter {
+        margin: 0 -2rem;
+        padding-left: 2rem;
+        padding-right: 2rem;
+      }
+      footer { padding: 4rem 1.5rem 6rem; }
     }
   </style>
 </head>
@@ -396,7 +405,7 @@
             <p class="article-excerpt">Available soon.</p>
           </div>
         </article>
-        <!-- Ajoute d'autres articles ici pour voir l'effet stagger -->
+        <!-- Duplique pour tester l’effet stagger -->
       </div>
     </section>
 
@@ -417,11 +426,10 @@
   </main>
 
   <footer>
-    © 2026 Dan's Thoughts • Written with devotion.
+    <span>© 2026 Dan's Thoughts • Written with devotion.</span>
   </footer>
 
   <script>
-  // Newsletter
   function handleSubscribe() {
     const email = document.getElementById('email').value;
     if (!email || !email.includes('@')) {
@@ -432,14 +440,14 @@
     document.getElementById('successMsg').style.display = 'block';
   }
 
-  // Apparition progressive des articles au scroll (très léger)
+  // Apparition progressive des articles
   const articles = document.querySelectorAll('.article');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry, index) => {
       if (entry.isIntersecting) {
         setTimeout(() => {
           entry.target.classList.add('visible');
-        }, index * 120); // stagger léger
+        }, index * 120);
         observer.unobserve(entry.target);
       }
     });
