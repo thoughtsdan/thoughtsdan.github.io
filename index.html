@@ -1,461 +1,426 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dan's Thoughts</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #080c14;
-    --border: #131c2e;
-    --text: #8a9ab8;
-    --text-dim: #3d4f6a;
-    --text-bright: #c0d0e8;
-    --highlight: #2d5bbf;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dan's Thoughts</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:        #0a0e17;
+      --surface:    #111827;
+      --border:     #1e293b;
+      --text:       #94a3b8;
+      --text-dim:   #64748b;
+      --text-bright:#e2e8f0;
+      --highlight:  #3b82f6;     /* bleu plus moderne */
+      --accent:     #60a5fa;
+      --radius:     16px;
+    }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    font-weight: 400;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-weight: 400;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
 
-  /* NAV */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.4rem 4rem;
-    border-bottom: 1px solid var(--border);
-    background: rgba(8, 12, 20, 0.95);
-    backdrop-filter: blur(12px);
-    animation: fadeDown 0.7s ease both;
-  }
+    /* ── SIDEBAR NAV ── */
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 280px;
+      padding: 3rem 2.5rem;
+      border-right: 1px solid var(--border);
+      background: var(--surface);
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
 
-  .logo {
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--text-bright);
-  }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--text-bright);
+      letter-spacing: -0.02em;
+      margin-bottom: 4rem;
+    }
 
-  nav ul { list-style: none; display: flex; gap: 2.5rem; }
-  nav ul li a {
-    color: var(--text-dim);
-    text-decoration: none;
-    font-size: 0.78rem;
-    transition: color 0.25s;
-  }
-  nav ul li a:hover { color: var(--text-bright); }
+    nav ul {
+      list-style: none;
+    }
 
-  /* HERO */
-  .hero {
-    padding: 12rem 4rem 5rem;
-    text-align: center;
-    animation: fadeUp 0.8s ease 0.15s both;
-  }
+    nav ul li {
+      margin: 1.4rem 0;
+    }
 
-  .hero-tag {
-    font-size: 0.75rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--highlight);
-    margin-bottom: 1.4rem;
-  }
+    nav ul li a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.2s, transform 0.2s;
+      display: block;
+    }
 
-  .hero h1 {
-    font-size: clamp(2.4rem, 5vw, 4rem);
-    color: var(--text-bright);
-    line-height: 1.15;
-    margin-bottom: 1.4rem;
-    font-weight: 600;
-    letter-spacing: -0.03em;
-  }
+    nav ul li a:hover {
+      color: var(--accent);
+      transform: translateX(6px);
+    }
 
-  .hero p {
-    font-size: 1rem;
-    line-height: 1.8;
-    color: var(--text-dim);
-    max-width: 500px;
-    margin: 0 auto;
-  }
+    /* ── MAIN CONTENT ── */
+    main {
+      margin-left: 280px;
+      padding: 4rem 5rem 6rem;
+      max-width: 1200px;
+    }
 
-  /* DIVIDER */
-  .divider {
-    margin: 3rem 4rem;
-    border: none;
-    border-top: 1px solid var(--border);
-    animation: expand 0.9s ease 0.4s both;
-    transform-origin: left;
-  }
+    /* HERO */
+    .hero {
+      padding: 8rem 0 6rem;
+      max-width: 900px;
+    }
 
-  /* FEATURED */
-  .featured {
-    margin: 0 4rem 2rem;
-    padding: 2.5rem;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    position: relative;
-    animation: fadeUp 0.8s ease 0.3s both;
-  }
+    .hero-tag {
+      font-size: 0.82rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--highlight);
+      margin-bottom: 1.8rem;
+      font-weight: 500;
+    }
 
-  .featured::after {
-    content: 'FEATURED';
-    position: absolute;
-    top: 1rem; right: 1.5rem;
-    font-size: 0.55rem;
-    letter-spacing: 0.2em;
-    color: var(--border);
-  }
+    .hero h1 {
+      font-size: clamp(3.2rem, 7vw, 5.5rem);
+      color: var(--text-bright);
+      line-height: 1.08;
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      margin-bottom: 1.6rem;
+    }
 
-  .featured-label {
-    font-size: 0.65rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--highlight);
-    margin-bottom: 0.8rem;
-  }
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--text-dim);
+      max-width: 620px;
+    }
 
-  .featured-title {
-    font-size: 1.5rem;
-    color: var(--text-bright);
-    line-height: 1.25;
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    margin-bottom: 1rem;
-    max-width: 560px;
-  }
+    /* FEATURED – full bleed style */
+    .featured {
+      position: relative;
+      margin: 0 -5rem 5rem;
+      padding: 6rem 5rem;
+      background: linear-gradient(135deg, #0f172a 0%, #111827 100%);
+      border-radius: 0;
+      overflow: hidden;
+      isolation: isolate;
+    }
 
-  .featured-body {
-    font-size: 0.85rem;
-    color: var(--text-dim);
-    line-height: 1.8;
-    max-width: 600px;
-  }
+    .featured::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 30% 70%, rgba(59,130,246,0.08) 0%, transparent 60%);
+      z-index: 0;
+    }
 
-  .read-btn {
-    margin-top: 1.4rem;
-    display: inline-block;
-    padding: 0.55rem 1.2rem;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.78rem;
-    color: var(--text);
-    cursor: pointer;
-    background: transparent;
-    transition: all 0.25s;
-  }
-  .read-btn:hover {
-    background: var(--highlight);
-    border-color: var(--highlight);
-    color: #fff;
-  }
+    .featured > * {
+      position: relative;
+      z-index: 1;
+    }
 
-  /* ARTICLES BOX */
-  .articles-box {
-    margin: 0 4rem 3rem;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    overflow: hidden;
-    animation: fadeUp 0.8s ease 0.35s both;
-  }
+    .featured-label {
+      font-size: 0.78rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--highlight);
+      margin-bottom: 1.2rem;
+    }
 
-  .articles-header {
-    padding: 1.2rem 2rem;
-    border-bottom: 1px solid var(--border);
-    font-size: 0.6rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-  }
+    .featured-title {
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      color: white;
+      line-height: 1.15;
+      font-weight: 700;
+      margin-bottom: 1.4rem;
+      max-width: 900px;
+    }
 
-  /* ARTICLE — flex layout, no grid, no num column */
-  .article {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1.5rem;
-    padding: 1.8rem 2rem;
-    border-bottom: 1px solid var(--border);
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    transition: background 0.2s;
-  }
+    .featured-body {
+      font-size: 1.05rem;
+      color: var(--text);
+      line-height: 1.75;
+      max-width: 720px;
+      margin-bottom: 2rem;
+    }
 
-  .article:last-child { border-bottom: none; }
+    .read-btn {
+      padding: 0.85rem 1.8rem;
+      background: transparent;
+      border: 1px solid var(--highlight);
+      border-radius: var(--radius);
+      color: var(--highlight);
+      font-weight: 500;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
 
-  .article::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 2px;
-    background: var(--highlight);
-    transform: scaleY(0);
-    transform-origin: bottom;
-    transition: transform 0.3s ease;
-  }
+    .read-btn:hover {
+      background: var(--highlight);
+      color: white;
+      transform: translateY(-2px);
+    }
 
-  .article:hover::before { transform: scaleY(1); }
-  .article:hover .article-title { color: var(--text-bright); }
-  .article:hover .article-arrow { opacity: 1; transform: translateX(0); }
+    /* RECENT ARTICLES – Masonry / Grid cards */
+    .recent-section {
+      margin: 6rem 0;
+    }
 
-  .article-content {
-    flex: 1;
-    min-width: 0;
-  }
+    .articles-header {
+      font-size: 0.9rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 2.5rem;
+      font-weight: 600;
+    }
 
-  .article-meta {
-    font-size: 0.65rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--highlight);
-    margin-bottom: 0.4rem;
-  }
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 2.2rem;
+    }
 
-  .article-title {
-    font-size: 1rem;
-    color: var(--text);
-    font-weight: 500;
-    line-height: 1.4;
-    margin-bottom: 0.5rem;
-    transition: color 0.25s;
-  }
+    .article {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
 
-  .article-excerpt {
-    font-size: 0.8rem;
-    color: var(--text-dim);
-    line-height: 1.75;
-  }
+    .article:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
 
-  .article-arrow {
-    font-size: 1rem;
-    color: var(--highlight);
-    opacity: 0;
-    transform: translateX(-8px);
-    transition: all 0.25s ease;
-    flex-shrink: 0;
-  }
+    .article-content {
+      padding: 1.8rem 1.9rem;
+    }
 
-  /* NEWSLETTER */
-  .newsletter {
-    padding: 0 4rem 5rem;
-    display: flex;
-    justify-content: center;
-  }
+    .article-meta {
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--highlight);
+      margin-bottom: 0.9rem;
+    }
 
-  .newsletter-inner {
-    width: 100%;
-    text-align: center;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 4rem 5rem;
-  }
+    .article-title {
+      font-size: 1.35rem;
+      color: var(--text-bright);
+      font-weight: 600;
+      line-height: 1.3;
+      margin-bottom: 0.9rem;
+    }
 
-  .newsletter-inner h2 {
-    font-size: 1.6rem;
-    color: var(--text-bright);
-    font-weight: 600;
-    margin-bottom: 0.8rem;
-    letter-spacing: -0.02em;
-  }
+    .article-excerpt {
+      font-size: 0.95rem;
+      color: var(--text-dim);
+      line-height: 1.65;
+    }
 
-  .newsletter-inner > p {
-    font-size: 0.88rem;
-    color: var(--text-dim);
-    line-height: 1.75;
-    margin-bottom: 2.2rem;
-    max-width: 480px;
-    margin-left: auto;
-    margin-right: auto;
-  }
+    /* NEWSLETTER */
+    .newsletter {
+      padding: 8rem 0;
+      background: var(--surface);
+      margin: 0 -5rem;
+    }
 
-  .newsletter-form {
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-    max-width: 420px;
-    margin: 0 auto;
-  }
+    .newsletter-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 0 2rem;
+    }
 
-  .form-row label {
-    display: block;
-    font-size: 0.6rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    margin-bottom: 0.4rem;
-    text-align: left;
-  }
+    .newsletter-inner h2 {
+      font-size: 2.4rem;
+      color: var(--text-bright);
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+    }
 
-  .form-row input {
-    width: 100%;
-    padding: 0.85rem 1rem;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    color: var(--text-bright);
-    font-family: 'Inter', sans-serif;
-    font-size: 0.85rem;
-    outline: none;
-    transition: border-color 0.25s;
-  }
+    .newsletter-inner > p {
+      font-size: 1.1rem;
+      color: var(--text-dim);
+      margin-bottom: 3rem;
+    }
 
-  .form-row input::placeholder { color: var(--text-dim); }
-  .form-row input:focus { border-color: var(--highlight); }
+    .newsletter-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      max-width: 480px;
+      margin: 0 auto;
+    }
 
-  .form-submit {
-    padding: 0.9rem;
-    background: var(--highlight);
-    border: none;
-    border-radius: 6px;
-    color: #fff;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.85rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: opacity 0.25s;
-  }
-  .form-submit:hover { opacity: 0.85; }
+    .form-row input {
+      padding: 1rem 1.4rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-bright);
+      font-size: 1rem;
+    }
 
-  .newsletter-note {
-    font-size: 0.65rem;
-    color: var(--text-dim);
-    text-align: center;
-  }
+    .form-row input:focus {
+      border-color: var(--highlight);
+      outline: none;
+    }
 
-  .success-msg {
-    display: none;
-    padding: 0.9rem;
-    border: 1px solid var(--highlight);
-    border-radius: 6px;
-    font-size: 0.78rem;
-    color: var(--highlight);
-    text-align: center;
-  }
+    .form-submit {
+      padding: 1.1rem;
+      background: var(--highlight);
+      border: none;
+      border-radius: var(--radius);
+      color: white;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s;
+    }
 
-  /* FOOTER */
-  footer {
-    padding: 1.8rem 4rem;
-    border-top: 1px solid var(--border);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.65rem;
-    color: var(--text-dim);
-  }
+    .form-submit:hover {
+      opacity: 0.92;
+      transform: scale(1.02);
+    }
 
-  /* ANIMATIONS */
-  @keyframes fadeDown {
-    from { opacity: 0; transform: translateY(-16px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes expand {
-    from { transform: scaleX(0); opacity: 0; }
-    to { transform: scaleX(1); opacity: 1; }
-  }
-</style>
+    /* FOOTER */
+    footer {
+      padding: 4rem 5rem 6rem;
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .sidebar { width: 240px; }
+      main { margin-left: 240px; padding: 3rem 3rem; }
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        position: static;
+        width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        padding: 2rem;
+      }
+      main {
+        margin-left: 0;
+        padding: 2rem;
+      }
+      .featured { margin: 0 -2rem; padding: 5rem 2rem; }
+      .newsletter { margin: 0 -2rem; padding: 6rem 2rem; }
+    }
+  </style>
 </head>
 <body>
 
-<nav>
-  <div class="logo">Dan's Thoughts</div>
-  <ul>
-    <li><a href="#">Essays</a></li>
-    <li><a href="#">Notes</a></li>
-    <li><a href="#">Archive</a></li>
-    <li><a href="#">About</a></li>
-  </ul>
-</nav>
-
-<section class="hero">
-  <div class="hero-tag">— Mind unloader.</div>
-  <h1>Contradiction is the <br>gear of free speech.</h1>
-  <p>I share my thoughts without the bulky restrictions.</p>
-</section>
-
-<hr class="divider">
-
-<div class="featured">
-  <div class="featured-label">This week</div>
-  <h2 class="featured-title">The article's title.</h2>
-  <p class="featured-body">The article's description.</p>
-  <button class="read-btn">Read the piece →</button>
-</div>
-
-<div class="articles-box">
-  <div class="articles-header">Recent</div>
-
-  <article class="article">
-    <div class="article-content">
-      <div class="article-meta">Society — February 2026</div>
-      <h2 class="article-title">Is meritocracy disappearing over time?</h2>
-      <p class="article-excerpt">Available soon.</p>
+  <aside class="sidebar">
+    <div>
+      <div class="logo">Dan's Thoughts</div>
+      <nav>
+        <ul>
+          <li><a href="#">Essays</a></li>
+          <li><a href="#">Notes</a></li>
+          <li><a href="#">Archive</a></li>
+          <li><a href="#">About</a></li>
+        </ul>
+      </nav>
     </div>
-    <div class="article-arrow">→</div>
-  </article>
+  </aside>
 
-  <!-- Pour ajouter un article, copie-colle ce bloc ↓ -->
-  <!--
-  <article class="article">
-    <div class="article-content">
-      <div class="article-meta">Category — Date</div>
-      <h2 class="article-title">Title</h2>
-      <p class="article-excerpt">Excerpt.</p>
+  <main>
+    <section class="hero">
+      <div class="hero-tag">— Mind unloader.</div>
+      <h1>Contradiction is the <br>gear of free speech.</h1>
+      <p>I share my thoughts without the bulky restrictions.</p>
+    </section>
+
+    <div class="featured">
+      <div class="featured-label">This week</div>
+      <h2 class="featured-title">The article's title.</h2>
+      <p class="featured-body">The article's description.</p>
+      <button class="read-btn">Read the piece →</button>
     </div>
-    <div class="article-arrow">→</div>
-  </article>
-  -->
 
-</div>
+    <section class="recent-section">
+      <div class="articles-header">Recent</div>
+      <div class="articles-grid">
+        <article class="article">
+          <div class="article-content">
+            <div class="article-meta">Society — February 2026</div>
+            <h2 class="article-title">Is meritocracy disappearing over time?</h2>
+            <p class="article-excerpt">Available soon.</p>
+          </div>
+        </article>
 
-<section class="newsletter" id="newsletter">
-  <div class="newsletter-inner">
-    <h2>Join the weekly letter.</h2>
-    <p>Let's make quality emails trendy again.</p>
-    <div class="newsletter-form">
-      <div class="form-row">
-        <label for="email">Email address</label>
-        <input type="email" id="email" placeholder="you@example.com">
+        <!-- Duplique cet article pour tester la grille -->
+        <!--
+        <article class="article">…</article>
+        -->
       </div>
-      <button class="form-submit" onclick="handleSubscribe()">Subscribe</button>
-      <div class="success-msg" id="successMsg">✓ Welcome. Your first letter is on its way.</div>
-      <p class="newsletter-note">No spam. Unsubscribe anytime.</p>
-    </div>
-  </div>
-</section>
+    </section>
 
-<footer>
-  <span>© 2026 Dan's Thoughts</span>
-  <span>Written with devotion.</span>
-</footer>
+    <section class="newsletter" id="newsletter">
+      <div class="newsletter-inner">
+        <h2>Join the weekly letter.</h2>
+        <p>Let's make quality emails trendy again.</p>
+        <div class="newsletter-form">
+          <div class="form-row">
+            <input type="email" id="email" placeholder="you@example.com">
+          </div>
+          <button class="form-submit" onclick="handleSubscribe()">Subscribe</button>
+          <div class="success-msg" id="successMsg">✓ Welcome. Your first letter is on its way.</div>
+          <p class="newsletter-note">No spam. Unsubscribe anytime.</p>
+        </div>
+      </div>
+    </section>
+  </main>
 
-<script>
-function handleSubscribe() {
-  const email = document.getElementById('email').value;
-  if (!email || !email.includes('@')) {
-    document.getElementById('email').style.borderColor = '#c0392b';
-    return;
+  <footer>
+    <span>© 2026 Dan's Thoughts • Written with devotion.</span>
+  </footer>
+
+  <script>
+  function handleSubscribe() {
+    const email = document.getElementById('email').value;
+    if (!email || !email.includes('@')) {
+      document.getElementById('email').style.borderColor = '#ef4444';
+      return;
+    }
+    document.querySelector('.form-submit').style.display = 'none';
+    document.getElementById('successMsg').style.display = 'block';
   }
-  document.querySelector('.form-submit').style.display = 'none';
-  document.getElementById('successMsg').style.display = 'block';
-}
-</script>
+  </script>
 
 </body>
 </html>
-
-<!-- <div class="article-num">003</div> 
