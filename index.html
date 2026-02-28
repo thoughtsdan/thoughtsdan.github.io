@@ -114,21 +114,6 @@
       animation: fadeUp 1.4s ease-out 0.6s forwards;
     }
 
-    .full-bleed {
-      width: 100vw;
-      margin-left: calc(-50vw + 50%);
-      position: relative;
-      left: 50%;
-      right: 50%;
-      margin-right: calc(-50vw + 50%);
-    }
-
-    .featured,
-    .recent-section,
-    .newsletter {
-      composes: full-bleed;
-    }
-
     .featured {
       padding: 5rem 5vw;
       background: var(--surface);
@@ -234,6 +219,126 @@
     .article-title { font-size: 1.25rem; color: var(--text-bright); font-weight: 600; line-height: 1.3; margin-bottom: 0.9rem; }
     .article-excerpt { font-size: 0.92rem; color: var(--text-dim); line-height: 1.65; }
 
+    /* ── NOTES SECTION ── */
+    .notes-section {
+      padding: 4rem 5vw 7rem;
+      background: var(--surface);
+      border-bottom: 1px solid var(--separator);
+    }
+
+    .notes-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+      max-width: 1200px;
+      margin: 0 auto 2.2rem;
+    }
+
+    .notes-title {
+      font-size: 0.9rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      font-weight: 600;
+    }
+
+    .labels-row {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .label-btn {
+      padding: 0.4rem 1rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-dim);
+      font-size: 0.8rem;
+      font-weight: 500;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      letter-spacing: 0.04em;
+    }
+
+    .label-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .label-btn.active {
+      background: linear-gradient(90deg, var(--highlight), var(--accent));
+      border-color: transparent;
+      color: white;
+    }
+
+    .notes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.6rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .note-card {
+      background: var(--bg-dark);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.6rem 1.8rem;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.3s ease;
+    }
+
+    .note-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .note-card:hover {
+      box-shadow: 0 8px 28px rgba(0,0,0,0.3);
+      transform: translateY(-4px);
+    }
+
+    .note-card.hidden {
+      display: none;
+    }
+
+    .note-label {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .note-label.life      { background: rgba(139, 92, 246, 0.15); color: #a78bfa; }
+    .note-label.society   { background: rgba(37, 99, 235, 0.15);  color: #60a5fa; }
+    .note-label.mind      { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+    .note-label.politics  { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+    .note-label.random    { background: rgba(236, 72, 153, 0.15); color: #f472b6; }
+
+    .note-text {
+      font-size: 0.97rem;
+      color: var(--text);
+      line-height: 1.7;
+      font-style: italic;
+    }
+
+    .note-date {
+      margin-top: 1rem;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      letter-spacing: 0.08em;
+    }
+
+    /* ── NEWSLETTER ── */
     .newsletter {
       padding: 9rem 5vw 10rem;
       background: var(--bg-dark);
@@ -268,14 +373,9 @@
       transition: border-color 0.3s;
     }
 
-    .form-row input::placeholder {
-      color: #60a5fa;
-      opacity: 0.7;
-    }
-
+    .form-row input::placeholder { color: #60a5fa; opacity: 0.7; }
     .form-row input:focus { border-color: var(--highlight); outline: none; }
 
-    /* État d'erreur */
     .form-row input.error {
       border-color: #ef4444;
       animation: shake 0.35s ease;
@@ -287,14 +387,7 @@
       75%      { transform: translateX(6px); }
     }
 
-    .error-msg {
-      font-size: 0.82rem;
-      color: #ef4444;
-      margin-top: 0.5rem;
-      text-align: left;
-      display: none;
-    }
-
+    .error-msg { font-size: 0.82rem; color: #ef4444; margin-top: 0.5rem; text-align: left; display: none; }
     .error-msg.visible { display: block; }
 
     .form-submit {
@@ -346,11 +439,11 @@
       .content-wrapper { margin-left: 0; }
       main { padding: 0; }
       .hero { padding: 6rem 1.5rem 8rem; }
-      .featured, .recent-section, .newsletter {
+      .featured, .recent-section, .notes-section, .newsletter {
         padding-left: 1.5rem;
         padding-right: 1.5rem;
       }
-      .articles-grid { grid-template-columns: 1fr; }
+      .articles-grid, .notes-grid { grid-template-columns: 1fr; }
       .newsletter-form { flex-direction: column; }
       footer { padding: 4rem 1.5rem 6rem; max-width: none; }
     }
@@ -364,6 +457,7 @@
       <nav>
         <ul>
           <li><a href="#recent" onclick="smoothScroll('#recent')">Essays</a></li>
+          <li><a href="#notes" onclick="smoothScroll('#notes')">Notes</a></li>
           <li><a href="#newsletter" onclick="smoothScroll('#newsletter')">Newsletter</a></li>
           <li><a href="about">About</a></li>
         </ul>
@@ -375,7 +469,7 @@
     <main>
       <section class="hero">
         <div class="hero-tag">— Mind unloader.</div>
-          <h1>I fight for the future<br> of our civilization</h1>
+        <h1>I fight for the future<br> of our civilization</h1>
         <p>I share my thoughts without the bulky restrictions.</p>
       </section>
 
@@ -392,10 +486,65 @@
           <article class="article">
             <div class="article-content">
               <div class="article-meta">Politics — February 2026</div>
-              <h2 class="article-title">Why is referendum the key for apprenciated politicians?</h2>
+              <h2 class="article-title">Why is referendum the key for appreciated politicians?</h2>
               <p class="article-excerpt">Available soon.</p>
             </div>
           </article>
+        </div>
+      </section>
+
+      <!-- ── NOTES SECTION ── -->
+      <section class="notes-section" id="notes">
+        <div class="notes-header-row">
+          <div class="notes-title">Notes</div>
+          <div class="labels-row">
+            <button class="label-btn active" onclick="filterNotes('all', this)">All</button>
+            <button class="label-btn" onclick="filterNotes('life', this)">Life</button>
+            <button class="label-btn" onclick="filterNotes('society', this)">Society</button>
+            <button class="label-btn" onclick="filterNotes('mind', this)">Mind</button>
+            <button class="label-btn" onclick="filterNotes('politics', this)">Politics</button>
+            <button class="label-btn" onclick="filterNotes('random', this)">Random</button>
+          </div>
+        </div>
+
+        <div class="notes-grid" id="notes-grid">
+
+          <div class="note-card" data-label="life">
+            <span class="note-label life">Life</span>
+            <p class="note-text">Most people optimize for comfort when they should be optimizing for growth. The two rarely coexist.</p>
+            <div class="note-date">Feb 2026</div>
+          </div>
+
+          <div class="note-card" data-label="society">
+            <span class="note-label society">Society</span>
+            <p class="note-text">We built institutions to outlive individuals. Now they outlive the ideas that created them.</p>
+            <div class="note-date">Feb 2026</div>
+          </div>
+
+          <div class="note-card" data-label="mind">
+            <span class="note-label mind">Mind</span>
+            <p class="note-text">Clarity isn't the absence of noise. It's the ability to ignore it.</p>
+            <div class="note-date">Jan 2026</div>
+          </div>
+
+          <div class="note-card" data-label="politics">
+            <span class="note-label politics">Politics</span>
+            <p class="note-text">A politician who fears referendums fears the people. That tells you everything.</p>
+            <div class="note-date">Jan 2026</div>
+          </div>
+
+          <div class="note-card" data-label="random">
+            <span class="note-label random">Random</span>
+            <p class="note-text">Every great idea sounded absurd before it worked. Every bad idea sounded reasonable before it failed.</p>
+            <div class="note-date">Dec 2025</div>
+          </div>
+
+          <div class="note-card" data-label="mind">
+            <span class="note-label mind">Mind</span>
+            <p class="note-text">The mind that never rests never truly thinks. Silence is where the real work happens.</p>
+            <div class="note-date">Dec 2025</div>
+          </div>
+
         </div>
       </section>
 
@@ -432,7 +581,28 @@
       }
     }
 
-    // Validation email stricte : doit contenir au moins un char avant @, un domaine, et une extension
+    // ── Notes filter ──
+    function filterNotes(label, btn) {
+      // Update active button
+      document.querySelectorAll('.label-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const cards = document.querySelectorAll('.note-card');
+      cards.forEach((card, i) => {
+        const match = label === 'all' || card.dataset.label === label;
+        if (match) {
+          card.classList.remove('hidden');
+          // re-trigger entrance animation
+          card.classList.remove('visible');
+          setTimeout(() => card.classList.add('visible'), i * 80);
+        } else {
+          card.classList.add('hidden');
+          card.classList.remove('visible');
+        }
+      });
+    }
+
+    // ── Email validation ──
     function isValidEmail(email) {
       return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
     }
@@ -457,7 +627,6 @@
         return;
       }
 
-      // Email valide → petit feedback visuel puis redirection
       btn.textContent = 'Redirecting…';
       btn.disabled = true;
 
@@ -466,8 +635,8 @@
       }, 600);
     }
 
-    // Apparition progressive des articles
-    const articles = document.querySelectorAll('.article');
+    // ── Intersection observer ──
+    const observables = document.querySelectorAll('.article, .note-card');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry, index) => {
         if (entry.isIntersecting) {
@@ -479,7 +648,7 @@
       });
     }, { threshold: 0.1 });
 
-    articles.forEach(article => observer.observe(article));
+    observables.forEach(el => observer.observe(el));
   </script>
 </body>
 </html>
