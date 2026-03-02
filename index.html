@@ -528,12 +528,33 @@
           <h2>Join the weekly letter.</h2>
           <p>Let's make quality emails trendy again.</p>
           <div class="newsletter-form">
-            <div class="form-row">
-              <input type="email" id="email" placeholder="you@example.com" oninput="clearError()">
-              <p class="error-msg" id="error-msg">Please enter a valid email address.</p>
-            </div>
-            <button class="form-submit" id="submit-btn" onclick="handleSubscribe()">Subscribe</button>
-          </div>
+  <form 
+    action="https://buttondown.com/api/emails/embed-subscribe/buttondown.com/dshlmlab" 
+    method="post"
+    class="embeddable-buttondown-form"
+  >
+    <div class="form-row">
+      <input 
+        type="email" 
+        name="email" 
+        id="email" 
+        placeholder="you@example.com" 
+        required 
+        oninput="clearError()"
+      >
+      <p class="error-msg" id="error-msg">Please enter a valid email adress</p>
+    </div>
+    
+    <!-- Optionnel : bouton caché pour indiquer que c'est un embed -->
+    <input type="hidden" name="embed" value="1">
+    
+    <!-- Optionnel : tags ou metadata (exemples) -->
+    <!-- <input type="hidden" name="tags" value="site,web"> -->
+    <!-- <input type="hidden" name="metadata[origine]" value="site-dans"> -->
+
+    <button type="submit" class="form-submit" id="submit-btn">Subscribe</button>
+  </form>
+</div>
           <p class="newsletter-note">No spam. Unsubscribe anytime.</p>
         </div>
       </section>
