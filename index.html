@@ -6,624 +6,337 @@
   <title>Dan's Thoughts</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg-dark: #0a0d14;
-      --surface: #141a24;
-      --border: #1f2836;
-      --separator: rgba(233, 239, 250, 0.08);
-      --text: #a5b3c9;
-      --text-dim: #6a7a95;
-      --text-bright:#e9effa;
-      --highlight: #2563eb;
-      --accent: #3b82f6;
-      --radius: 20px;
-      --sidebar-width: 280px;
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      background: var(--bg-dark);
-      color: var(--text);
-      font-family: 'Inter', system-ui, sans-serif;
-      font-weight: 400;
-      line-height: 1.7;
-      min-height: 100vh;
-      overflow-x: hidden;
-      scroll-behavior: smooth;
-    }
-
-    .sidebar {
-      position: fixed;
-      inset: 0 auto 0 0;
-      width: var(--sidebar-width);
-      padding: 3rem 2.5rem;
-      border-right: 1px solid var(--border);
-      background: var(--bg-dark);
-      z-index: 100;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .logo {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--text-bright);
-      letter-spacing: -0.02em;
-      margin-bottom: 4rem;
-    }
-
-    nav ul { list-style: none; }
-    nav ul li { margin: 1.6rem 0; }
-    nav ul li a {
-      color: var(--text-dim);
-      text-decoration: none;
-      font-size: 1rem;
-      font-weight: 500;
-      transition: color 0.3s, transform 0.3s;
-      display: block;
-      cursor: pointer;
-    }
-    nav ul li a:hover {
-      color: var(--accent);
-      transform: translateX(8px);
-    }
-
-    .content-wrapper {
-      margin-left: var(--sidebar-width);
-    }
-
-    main {
-      padding: 3rem 0 6rem;
-    }
-
-    .hero {
-      padding: 7rem 5rem 9rem;
-      max-width: 900px;
-      margin: 0 auto;
-      border-bottom: 1px solid var(--separator);
-    }
-
-    .hero-tag {
-      font-size: 0.78rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--highlight);
-      margin-bottom: 1.4rem;
-      font-weight: 500;
-      opacity: 0;
-      animation: fadeUp 1s ease-out 0.2s forwards;
-    }
-
-    .hero h1 {
-      font-size: clamp(2.8rem, 6vw, 4.6rem);
-      color: var(--text-bright);
-      line-height: 1.1;
-      font-weight: 700;
-      letter-spacing: -0.04em;
-      margin-bottom: 1.2rem;
-      opacity: 0;
-      animation: fadeUp 1.2s ease-out 0.4s forwards;
-    }
-
-    .hero p {
-      font-size: 1rem;
-      color: var(--text-dim);
-      max-width: 620px;
-      opacity: 0;
-      animation: fadeUp 1.4s ease-out 0.6s forwards;
-    }
-
-    .featured {
-      padding: 5rem 5vw;
-      background: var(--surface);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-      transition: transform 0.3s ease;
-      border-bottom: 1px solid var(--separator);
-    }
-
-    .featured:hover { transform: translateY(-5px); }
-
-    .featured > * {
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .featured-title {
-      font-size: clamp(2rem, 4.5vw, 3.4rem);
-      color: var(--text-bright);
-      line-height: 1.15;
-      font-weight: 700;
-      margin-bottom: 1.4rem;
-    }
-
-    .featured-body {
-      font-size: 1rem;
-      color: var(--text);
-      line-height: 1.75;
-      max-width: 720px;
-      margin-bottom: 2rem;
-    }
-
-    .read-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.9rem 1.9rem;
-      background: linear-gradient(90deg, var(--highlight), var(--accent));
-      color: white;
-      font-weight: 600;
-      font-size: 0.98rem;
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
-    }
-
-    .read-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 24px rgba(37, 99, 235, 0.45);
-    }
-
-    .read-btn:active {
-      transform: translateY(0);
-      box-shadow: 0 3px 10px rgba(37, 99, 235, 0.35);
-    }
-
-    .recent-section {
-      padding: 4rem 5vw 7rem;
-      background: var(--bg-dark);
-      border-bottom: 1px solid var(--separator);
-    }
-
-    .articles-header {
-      font-size: 0.9rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      margin-bottom: 2.2rem;
-      font-weight: 600;
-      max-width: 1200px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .articles-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-      gap: 2.4rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .article {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.7s ease-out;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-    }
-
-    .article.visible { opacity: 1; transform: translateY(0); }
-    .article:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 12px 36px rgba(0,0,0,0.3);
-    }
-
-    .article-content { padding: 2rem 1.9rem; }
-    .article-meta { font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--highlight); margin-bottom: 0.9rem; }
-    .article-title { font-size: 1.25rem; color: var(--text-bright); font-weight: 600; line-height: 1.3; margin-bottom: 0.9rem; }
-    .article-excerpt { font-size: 0.92rem; color: var(--text-dim); line-height: 1.65; }
-
-    /* ── NOTES SECTION ── */
-    .notes-section {
-      padding: 4rem 5vw 7rem;
-      background: var(--surface);
-      border-bottom: 1px solid var(--separator);
-    }
-
-    .notes-header-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1.2rem;
-      max-width: 1200px;
-      margin: 0 auto 2.2rem;
-    }
-
-    .notes-title {
-      font-size: 0.9rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      font-weight: 600;
-    }
-
-    .labels-row {
-      display: flex;
-      gap: 0.6rem;
-      flex-wrap: wrap;
-    }
-
-    .label-btn {
-      padding: 0.4rem 1rem;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: transparent;
-      color: var(--text-dim);
-      font-size: 0.8rem;
-      font-weight: 500;
-      font-family: 'Inter', sans-serif;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      letter-spacing: 0.04em;
-    }
-
-    .label-btn:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
-    .label-btn.active {
-      background: linear-gradient(90deg, var(--highlight), var(--accent));
-      border-color: transparent;
-      color: white;
-    }
-
-    .notes-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.6rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .note-card {
-      background: var(--bg-dark);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 1.6rem 1.8rem;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.3s ease;
-    }
-
-    .note-card.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .note-card:hover {
-      box-shadow: 0 8px 28px rgba(0,0,0,0.3);
-      transform: translateY(-4px);
-    }
-
-    .note-card.hidden {
-      display: none;
-    }
-
-    .note-label {
-      display: inline-block;
-      padding: 0.25rem 0.75rem;
-      border-radius: 999px;
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
-
-    .note-label.life      { background: rgba(139, 92, 246, 0.15); color: #a78bfa; }
-    .note-label.society   { background: rgba(37, 99, 235, 0.15);  color: #60a5fa; }
-    .note-label.mind      { background: rgba(16, 185, 129, 0.15); color: #34d399; }
-    .note-label.politics  { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
-    .note-label.random    { background: rgba(236, 72, 153, 0.15); color: #f472b6; }
-
-    .note-text {
-      font-size: 0.97rem;
-      color: var(--text);
-      line-height: 1.7;
-
-    }
-
-    .note-date {
-      margin-top: 1rem;
-      font-size: 0.75rem;
-      color: var(--text-dim);
-      letter-spacing: 0.08em;
-    }
-
-    /* ── NEWSLETTER ── */
-    .newsletter {
-      padding: 9rem 5vw 10rem;
-      background: var(--bg-dark);
-      border-bottom: 1px solid var(--separator);
-    }
-
-    .newsletter-inner {
-      max-width: 800px;
-      margin: 0 auto;
-      text-align: center;
-    }
-
-    .newsletter-inner h2 { font-size: 2.2rem; color: var(--text-bright); font-weight: 700; margin-bottom: 1.2rem; }
-    .newsletter-inner > p { font-size: 1rem; color: var(--text-dim); margin-bottom: 3rem; }
-
-    .newsletter-form {
-      display: flex;
-      gap: 1rem;
-      max-width: 620px;
-      margin: 0 auto;
-    }
-
-    .form-row { flex: 1; }
-    .form-row input {
-      padding: 1.25rem 1.6rem;
-      background: var(--bg-dark);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      color: var(--text-bright);
-      font-size: 1.05rem;
-      width: 100%;
-      transition: border-color 0.3s;
-    }
-
-    .form-row input::placeholder { color: #60a5fa; opacity: 0.7; }
-    .form-row input:focus { border-color: var(--highlight); outline: none; }
-
-    .form-row input.error {
-      border-color: #ef4444;
-      animation: shake 0.35s ease;
-    }
-
-    @keyframes shake {
-      0%,100% { transform: translateX(0); }
-      25%      { transform: translateX(-6px); }
-      75%      { transform: translateX(6px); }
-    }
-
-    .error-msg { font-size: 0.82rem; color: #ef4444; margin-top: 0.5rem; text-align: left; display: none; }
-    .error-msg.visible { display: block; }
-
-    .form-submit {
-      padding: 1.25rem 2rem;
-      background: linear-gradient(to right, var(--highlight), var(--accent));
-      border: none;
-      border-radius: var(--radius);
-      color: white;
-      font-weight: 600;
-      font-size: 1.05rem;
-      cursor: pointer;
-      transition: all 0.25s;
-      white-space: nowrap;
-    }
-
-    .form-submit:hover { opacity: 0.92; transform: scale(1.05); }
-    .form-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-
-    .newsletter-note { font-size: 0.85rem; color: var(--text-dim); margin-top: 1rem; }
-
-    footer {
-      padding: 5rem 5rem 7rem;
-      text-align: center;
-      color: var(--text-dim);
-      font-size: 0.95rem;
-      background: var(--bg-dark);
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @media (max-width: 1024px) {
-      :root { --sidebar-width: 240px; }
-    }
-
-    @media (max-width: 768px) {
-      .sidebar {
-        position: static;
-        width: 100%;
-        height: auto;
-        border-right: none;
-        border-bottom: 1px solid var(--border);
-        padding: 2rem;
-      }
-      .content-wrapper { margin-left: 0; }
-      main { padding: 0; }
-      .hero { padding: 6rem 1.5rem 8rem; }
-      .featured, .recent-section, .notes-section, .newsletter {
-        padding-left: 1.5rem;
-        padding-right: 1.5rem;
-      }
-      .articles-grid, .notes-grid { grid-template-columns: 1fr; }
-      .newsletter-form { flex-direction: column; }
-      footer { padding: 4rem 1.5rem 6rem; max-width: none; }
+    :root{--bg:#0a0d14;--surface:#141a24;--border:#1f2836;--sep:rgba(233,239,250,0.08);--text:#a5b3c9;--dim:#6a7a95;--bright:#e9effa;--blue:#2563eb;--accent:#3b82f6;--r:20px;--sw:280px}
+    *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.7;min-height:100vh;overflow-x:hidden}
+    #prog{position:fixed;top:0;left:var(--sw);right:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--accent));transform-origin:left;transform:scaleX(0);z-index:300;transition:transform .1s linear}
+    .sb{position:fixed;inset:0 auto 0 0;width:var(--sw);padding:3rem 2.5rem;border-right:1px solid var(--border);background:var(--bg);z-index:100;display:flex;flex-direction:column;justify-content:space-between}
+    .logo{font-size:1.5rem;font-weight:700;color:var(--bright);letter-spacing:-.02em;margin-bottom:4rem}
+    nav ul{list-style:none}nav li{margin:1.6rem 0}
+    nav a{color:var(--dim);text-decoration:none;font-size:1rem;font-weight:500;display:block;transition:color .25s,transform .25s;cursor:pointer}
+    nav a:hover{color:var(--accent);transform:translateX(8px)}
+    .sb-bot{margin-top:auto}
+    .tog{display:flex;align-items:center;gap:.7rem;width:100%;justify-content:center;padding:.55rem .9rem;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--dim);font-size:.8rem;font-family:'Inter',sans-serif;font-weight:500;cursor:pointer;transition:all .2s}
+    .tog:hover{border-color:var(--accent);color:var(--accent)}
+    .track{width:28px;height:16px;border-radius:999px;background:var(--border);position:relative;transition:background .3s;flex-shrink:0}
+    .track::after{content:'';position:absolute;top:3px;left:3px;width:10px;height:10px;border-radius:50%;background:var(--dim);transition:transform .3s,background .3s}
+    body.lm .track{background:#bfdbfe}body.lm .track::after{background:var(--blue);transform:translateX(12px)}
+    .sb-bio{border-top:1px solid var(--border);padding-top:1.6rem;margin-top:1.4rem}
+    .sb-bio p{font-size:.81rem;color:var(--dim);line-height:1.6;margin-bottom:1.1rem}
+    .socials{display:flex;gap:.7rem}
+    .soc{width:32px;height:32px;border-radius:8px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--dim);text-decoration:none;font-size:.74rem;font-weight:700;transition:all .2s}
+    .soc:hover{border-color:var(--accent);color:var(--accent)}
+    body.lm{--bg:#f4f6fb;--surface:#fff;--border:#dde3ef;--sep:rgba(0,0,0,.07);--text:#4a5568;--dim:#8a96a8;--bright:#1a202c}
+    .wrap{margin-left:var(--sw)}main{padding:3rem 0 6rem}
+    .hero{padding:7rem 5rem 9rem;max-width:900px;margin:0 auto;border-bottom:1px solid var(--sep)}
+    .htag{font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);margin-bottom:1.4rem;font-weight:500;opacity:0;animation:up 1s ease-out .2s forwards}
+    .hero h1{font-size:clamp(2.8rem,6vw,4.6rem);color:var(--bright);line-height:1.1;font-weight:700;letter-spacing:-.04em;margin-bottom:1.2rem;opacity:0;animation:up 1.2s ease-out .4s forwards}
+    .hero p{font-size:1rem;color:var(--dim);max-width:620px;opacity:0;animation:up 1.4s ease-out .6s forwards}
+    .feat{padding:5rem 5vw;background:var(--surface);box-shadow:0 10px 30px rgba(0,0,0,.3);border-bottom:1px solid var(--sep);transition:transform .3s}
+    .feat:hover{transform:translateY(-5px)}.feat-in{max-width:900px;margin:0 auto}
+    .feat-lbl{font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);font-weight:500;margin-bottom:1rem;display:block;text-align:center}
+    .feat h2{font-size:clamp(2rem,4.5vw,3.4rem);color:var(--bright);line-height:1.15;font-weight:700;margin-bottom:1rem}
+    .feat-meta{display:flex;align-items:center;gap:1rem;margin-bottom:1.6rem}
+    .feat-meta span{font-size:.82rem;color:var(--dim)}
+    .dot{width:3px;height:3px;border-radius:50%;background:var(--border);display:inline-block}
+    .feat p{font-size:1rem;color:var(--text);line-height:1.75;max-width:720px;margin-bottom:2rem}
+    .rbtn{display:inline-flex;align-items:center;gap:.5rem;padding:.9rem 1.9rem;background:linear-gradient(90deg,var(--blue),var(--accent));color:#fff;font-weight:600;font-size:.98rem;border:none;border-radius:12px;cursor:pointer;transition:all .3s;box-shadow:0 4px 14px rgba(37,99,235,.3)}
+    .rbtn:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(37,99,235,.45)}
+    .recent{padding:4rem 5vw 7rem;background:var(--bg);border-bottom:1px solid var(--sep)}
+    .sec-hd{font-size:.9rem;letter-spacing:.25em;text-transform:uppercase;color:var(--dim);margin-bottom:2.2rem;font-weight:600;max-width:1200px;margin-left:auto;margin-right:auto}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:2.4rem;max-width:1200px;margin:0 auto}
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;opacity:0;transform:translateY(30px);transition:all .7s ease-out;box-shadow:0 8px 24px rgba(0,0,0,.2)}
+    .card.vis{opacity:1;transform:translateY(0)}.card:hover{transform:translateY(-8px);box-shadow:0 12px 36px rgba(0,0,0,.3)}
+    .card-body{padding:2rem 1.9rem}
+    .card-meta{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-bottom:.9rem}
+    .card h2{font-size:1.25rem;color:var(--bright);font-weight:600;line-height:1.3;margin-bottom:.9rem}
+    .card-exc{font-size:.92rem;color:var(--dim);line-height:1.65}
+    .card-ft{display:flex;align-items:center;justify-content:space-between;margin-top:1.4rem;padding-top:1.2rem;border-top:1px solid var(--sep)}
+    .rtime{font-size:.75rem;color:var(--dim)}
+    .cs-badge{font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.25rem .7rem;border-radius:999px;background:rgba(37,99,235,.1);color:var(--accent);border:1px solid rgba(37,99,235,.2)}
+    .notes-sec{padding:4rem 5vw 7rem;background:var(--surface);border-bottom:1px solid var(--sep)}
+    .notes-hd{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.2rem;max-width:1200px;margin:0 auto 2.2rem}
+    .notes-t{font-size:.9rem;letter-spacing:.25em;text-transform:uppercase;color:var(--dim);font-weight:600}
+    .lbls{display:flex;gap:.6rem;flex-wrap:wrap}
+    .lbtn{padding:.4rem 1rem;border-radius:999px;border:1px solid var(--border);background:transparent;color:var(--dim);font-size:.8rem;font-weight:500;font-family:'Inter',sans-serif;cursor:pointer;transition:all .2s;letter-spacing:.04em}
+    .lbtn:hover{border-color:var(--accent);color:var(--accent)}
+    .lbtn.on{background:linear-gradient(90deg,var(--blue),var(--accent));border-color:transparent;color:#fff}
+    .ngrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.6rem;max-width:1200px;margin:0 auto}
+    .nc{background:var(--bg);border:1px solid var(--border);border-radius:16px;padding:1.6rem 1.8rem;opacity:0;transform:translateY(20px);transition:opacity .5s,transform .5s,box-shadow .3s}
+    .nc.vis{opacity:1;transform:translateY(0)}.nc:hover{box-shadow:0 8px 28px rgba(0,0,0,.3);transform:translateY(-4px)}.nc.hide{display:none}
+    .nl{display:inline-block;padding:.25rem .75rem;border-radius:999px;font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem}
+    .nl.life{background:rgba(139,92,246,.15);color:#a78bfa}
+    .nl.society{background:rgba(37,99,235,.15);color:#60a5fa}
+    .nl.politics{background:rgba(245,158,11,.15);color:#fbbf24}
+    .nl.business{background:rgba(20,184,166,.15);color:#2dd4bf}
+    .nt{font-size:.97rem;color:var(--text);line-height:1.7}
+    .nd{margin-top:1rem;font-size:.75rem;color:var(--dim);letter-spacing:.08em}
+    .quote-sec{padding:7rem 5vw;background:var(--bg);border-bottom:1px solid var(--sep);text-align:center}
+    .qin{max-width:820px;margin:0 auto}
+    .qm{font-size:5rem;line-height:1;color:var(--blue);opacity:.3;font-family:Georgia,serif;margin-bottom:.5rem}
+    .qt{font-size:clamp(1rem,2.2vw,1.35rem);color:var(--bright);font-weight:500;line-height:1.6;font-style:italic;margin-bottom:1.8rem}
+    .qa{font-size:.85rem;color:var(--dim);letter-spacing:.15em;text-transform:uppercase;font-weight:500}
+    .stats{display:flex;border-top:1px solid var(--sep);border-bottom:1px solid var(--sep);background:var(--surface)}
+    .si{flex:1;padding:2.2rem 1rem;text-align:center;border-right:1px solid var(--sep)}.si:last-child{border-right:none}
+    .sn{font-size:2.2rem;font-weight:700;color:var(--bright);letter-spacing:-.03em;display:block;margin-bottom:.3rem}
+    .sl{font-size:.75rem;color:var(--dim);text-transform:uppercase;letter-spacing:.15em;font-weight:500}
+    .nl-sec{padding:9rem 5vw 10rem;background:var(--bg);border-bottom:1px solid var(--sep)}
+    .nl-in{max-width:800px;margin:0 auto;text-align:center}
+    .nl-in h2{font-size:2.2rem;color:var(--bright);font-weight:700;margin-bottom:1.2rem}
+    .nl-in>p{font-size:1rem;color:var(--dim);margin-bottom:2rem}
+    .subctr{display:inline-flex;align-items:center;gap:.6rem;background:rgba(37,99,235,.08);border:1px solid rgba(37,99,235,.2);border-radius:999px;padding:.4rem 1.1rem;margin-bottom:2.5rem;font-size:.82rem;color:var(--accent);font-weight:500}
+    .pulse{width:7px;height:7px;border-radius:50%;background:#22c55e;animation:pls 2s ease-in-out infinite}
+    @keyframes pls{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+    .nform{display:flex;gap:1rem;max-width:620px;margin:0 auto}.nrow{flex:1}
+    .nrow input{padding:1.25rem 1.6rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);color:var(--bright);font-size:1.05rem;width:100%;transition:border-color .3s;font-family:'Inter',sans-serif}
+    .nrow input::placeholder{color:#60a5fa;opacity:.7}.nrow input:focus{border-color:var(--blue);outline:none}
+    .nrow input.err{border-color:#ef4444;animation:shk .35s}
+    @keyframes shk{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+    .errmsg{font-size:.82rem;color:#ef4444;margin-top:.5rem;text-align:left;display:none}.errmsg.show{display:block}
+    .nsub{padding:1.25rem 2rem;background:linear-gradient(to right,var(--blue),var(--accent));border:none;border-radius:var(--r);color:#fff;font-weight:600;font-size:1.05rem;cursor:pointer;transition:all .25s;white-space:nowrap;font-family:'Inter',sans-serif}
+    .nsub:hover{opacity:.92;transform:scale(1.05)}.nsub:disabled{opacity:.6;cursor:not-allowed;transform:none}
+    .nnote{font-size:.85rem;color:var(--dim);margin-top:1rem}
+    #btt{position:fixed;bottom:2.5rem;right:2.5rem;width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--blue),var(--accent));border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 18px rgba(37,99,235,.4);opacity:0;transform:translateY(20px);transition:opacity .3s,transform .3s;pointer-events:none;z-index:150}
+    #btt.vis{opacity:1;transform:translateY(0);pointer-events:auto}#btt:hover{transform:translateY(-4px)}
+    #btt svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+    footer{padding:5rem 5rem 7rem;text-align:center;color:var(--dim);font-size:.95rem;background:var(--bg);max-width:1200px;margin:0 auto}
+    @keyframes up{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    @media(max-width:1024px){:root{--sw:240px}}
+    @media(max-width:768px){
+      #prog{left:0}.sb{position:static;width:100%;height:auto;border-right:none;border-bottom:1px solid var(--border);padding:2rem}
+      .wrap{margin-left:0}main{padding:0}.hero{padding:6rem 1.5rem 8rem}
+      .feat,.recent,.notes-sec,.nl-sec{padding-left:1.5rem;padding-right:1.5rem}
+      .grid,.ngrid{grid-template-columns:1fr}.nform{flex-direction:column}
+      footer{padding:4rem 1.5rem 6rem;max-width:none}
+      .stats{flex-wrap:wrap}.si{min-width:50%;border-right:none;border-bottom:1px solid var(--sep)}
     }
   </style>
 </head>
 <body>
 
-  <aside class="sidebar">
-    <div>
-      <div class="logo">Dan's Thoughts</div>
-      <nav>
-        <ul>
-          <li><a href="#recent" onclick="smoothScroll('#recent')">Essays</a></li>
-          <li><a href="#notes" onclick="smoothScroll('#notes')">Notes</a></li>
-          <li><a href="#newsletter" onclick="smoothScroll('#newsletter')">Newsletter</a></li>
-          <li><a href="about">About</a></li>
-        </ul>
-      </nav>
-    </div>
-  </aside>
+<div id="prog"></div>
+<button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
 
-  <div class="content-wrapper">
-    <main>
-      <section class="hero">
-        <div class="hero-tag">— Mind unloader.</div>
-        <h1>I fight for the future<br> of our civilization</h1>
-        <p>I share my thoughts without the bulky restrictions.</p>
-      </section>
-
-      <section class="recent-section" id="recent">
-        <div class="articles-header">Recent</div>
-        <div class="articles-grid">
-          <article class="article">
-            <div class="article-content">
-              <div class="article-meta">Society — February 2026</div>
-              <h2 class="article-title">Is meritocracy disappearing over time?</h2>
-              <p class="article-excerpt">Available soon.</p>
-            </div>
-          </article>
-          <article class="article">
-            <div class="article-content">
-              <div class="article-meta">Politics — February 2026</div>
-              <h2 class="article-title">Why is referendum the key for appreciated politicians?</h2>
-              <p class="article-excerpt">Available soon.</p>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <!-- ── NOTES SECTION ── -->
-      <section class="notes-section" id="notes">
-        <div class="notes-header-row">
-          <div class="notes-title">Notes</div>
-          <div class="labels-row">
-            <button class="label-btn active" onclick="filterNotes('all', this)">All</button>
-            <button class="label-btn" onclick="filterNotes('life', this)">Life</button>
-            <button class="label-btn" onclick="filterNotes('society', this)">Society</button>
-            <button class="label-btn" onclick="filterNotes('business', this)">Business</button>
-            <button class="label-btn" onclick="filterNotes('politics', this)">Politics</button>
-          </div>
-        </div>
-
-        <div class="notes-grid" id="notes-grid">
-
-          <div class="note-card" data-label="politics">
-            <span class="note-label politics">Politics</span>
-            <p class="note-text">Currently in the UK on holidays, the country is deeply falling : garbages, criminality (stats), islamisation. If we add to these the restriction of freedom of speech by the governement, the nation is in crisis. Labour Party has to go, for the health of the britain's civilization. Vote Restore.</p>
-            <div class="note-date">Feb 2026</div>
-          </div>
-
-          <div class="note-card" data-label="society">
-            <span class="note-label society">Society</span>
-            <p class="note-text">Embrace conservatism not wokism. One will lead you to success and family, the other to an identity crisis.</p>
-            <div class="note-date">Feb 2026</div>
-          </div>
-
-        </div>
-      </section>
-
-      <section class="newsletter" id="newsletter">
-        <div class="newsletter-inner">
-          <h2>Join the weekly letter.</h2>
-          <p>Let's make quality emails trendy again.</p>
-          <div class="newsletter-form">
-            <div class="form-row">
-              <input type="email" id="email" placeholder="you@example.com" oninput="clearError()">
-              <p class="error-msg" id="error-msg">Please enter a valid email address.</p>
-            </div>
-            <button class="form-submit" id="submit-btn" onclick="handleSubscribe()">Subscribe</button>
-          </div>
-          <p class="newsletter-note">No spam. Unsubscribe anytime.</p>
-        </div>
-      </section>
-    </main>
-
-    <footer>
-      <span>© 2026 Dan's Thoughts • Written with devotion.</span>
-    </footer>
+<aside class="sb">
+  <div>
+    <div class="logo">Dan's Thoughts</div>
+    <nav><ul>
+      <li><a onclick="go('#recent')">Essays</a></li>
+      <li><a onclick="go('#notes')">Notes</a></li>
+      <li><a onclick="go('#newsletter')">Newsletter</a></li>
+      <li><a href="about">About</a></li>
+    </ul></nav>
   </div>
+  <div class="sb-bot">
+    <button class="tog" onclick="toggleTheme()">
+      <div class="track"></div>
+      <span id="tlbl">Light mode</span>
+    </button>
+    <div class="sb-bio">
+      <p>Dan — writing on civilization, politics & the human condition. Based in Europe.</p>
+      <div class="socials">
+        <a class="soc" href="#">&#120143;</a>
+      </div>
+    </div>
+  </div>
+</aside>
 
-  <script>
-    function smoothScroll(targetId) {
-      event.preventDefault();
-      const targetElement = document.querySelector(targetId);
-      if (targetElement) {
-        const offset = 80;
-        const elementPosition = targetElement.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - offset;
-        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-      }
-    }
+<div class="wrap">
+<main>
 
-    // ── Notes filter ──
-    function filterNotes(label, btn) {
-      // Update active button
-      document.querySelectorAll('.label-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+<section class="hero">
+  <div class="htag">— Mind unloader.</div>
+  <h1>I fight for the future<br>of our civilization</h1>
+  <p>I share my thoughts without the bulky restrictions.</p>
+</section>
 
-      const cards = document.querySelectorAll('.note-card');
-      cards.forEach((card, i) => {
-        const match = label === 'all' || card.dataset.label === label;
-        if (match) {
-          card.classList.remove('hidden');
-          // re-trigger entrance animation
-          card.classList.remove('visible');
-          setTimeout(() => card.classList.add('visible'), i * 80);
-        } else {
-          card.classList.add('hidden');
-          card.classList.remove('visible');
-        }
-      });
-    }
+<section class="feat">
+  <div class="feat-in">
+    <span class="feat-lbl">&#9733; Featured Essay</span>
+    <h2 id="ft-title"></h2>
+    <div class="feat-meta">
+      <span id="ft-cat"></span><span class="dot"></span>
+      <span id="ft-date"></span><span class="dot"></span>
+      <span id="ft-time"></span>
+    </div>
+    <p id="ft-body"></p>
+    <button class="rbtn">Read essay <span style="opacity:.6;font-size:.85em">&#8212; coming soon</span></button>
+  </div>
+</section>
 
-    // ── Email validation ──
-    function isValidEmail(email) {
-      return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
-    }
+<section class="recent" id="recent">
+  <div class="sec-hd">Recent</div>
+  <div class="grid">
+    <article class="card">
+      <div class="card-body">
+        <div class="card-meta">Society &#8212; February 2026</div>
+        <h2>Is meritocracy disappearing over time?</h2>
+        <p class="card-exc">Available soon.</p>
+        <div class="card-ft">
+          <span class="rtime">&#9201; ~6 min read</span>
+          <span class="cs-badge">Coming soon</span>
+        </div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="card-body">
+        <div class="card-meta">Politics &#8212; February 2026</div>
+        <h2>Why is referendum the key for appreciated politicians?</h2>
+        <p class="card-exc">Available soon.</p>
+        <div class="card-ft">
+          <span class="rtime">&#9201; ~5 min read</span>
+          <span class="cs-badge">Coming soon</span>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
 
-    function clearError() {
-      const input = document.getElementById('email');
-      const msg = document.getElementById('error-msg');
-      input.classList.remove('error');
-      msg.classList.remove('visible');
-    }
+<section class="notes-sec" id="notes">
+  <div class="notes-hd">
+    <div class="notes-t">Notes</div>
+    <div class="lbls">
+      <button class="lbtn on" onclick="filt('all',this)">All</button>
+      <button class="lbtn" onclick="filt('life',this)">Life</button>
+      <button class="lbtn" onclick="filt('society',this)">Society</button>
+      <button class="lbtn" onclick="filt('business',this)">Business</button>
+      <button class="lbtn" onclick="filt('politics',this)">Politics</button>
+    </div>
+  </div>
+  <div class="ngrid" id="ng">
 
-    function handleSubscribe() {
-      const input = document.getElementById('email');
-      const email = input.value.trim();
-      const msg = document.getElementById('error-msg');
-      const btn = document.getElementById('submit-btn');
+    <div class="nc" data-label="politics">
+      <span class="nl politics">Politics</span>
+      <p class="nt">Currently in the UK on holidays, the country is deeply falling : garbages, criminality (stats), islamisation. If we add to these the restriction of freedom of speech by the governement, the nation is in crisis. Labour Party has to go, for the health of the britain's civilization. Vote Restore.</p>
+      <div class="nd">Feb 2026</div>
+    </div>
 
-      if (!isValidEmail(email)) {
-        input.classList.add('error');
-        msg.classList.add('visible');
-        input.focus();
-        return;
-      }
+    <div class="nc" data-label="society">
+      <span class="nl society">Society</span>
+      <p class="nt">Embrace conservatism not wokism. One will lead you to success and family, the other to an identity crisis.</p>
+      <div class="nd">Feb 2026</div>
+    </div>
 
-      btn.textContent = 'Redirecting…';
-      btn.disabled = true;
+  </div>
+</section>
 
-      setTimeout(() => {
-        window.location.href = 'acknowledgements';
-      }, 600);
-    }
+<section class="quote-sec">
+  <div class="qin">
+    <div class="qm">"</div>
+    <p class="qt">The woke government is controlling us so much that we can't be in favor of banning illegal people without being called a fascist, tyrannic nazi anymore.</p>
+    <span class="qa">&#8212; Dan</span>
+  </div>
+</section>
 
-    // ── Intersection observer ──
-    const observables = document.querySelectorAll('.article, .note-card');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry, index) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => {
-            entry.target.classList.add('visible');
-          }, index * 120);
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
+<div class="stats">
+  <div class="si"><span class="sn" id="s-essays">&#8212;</span><span class="sl">Essays</span></div>
+  <div class="si"><span class="sn" id="s-notes">&#8212;</span><span class="sl">Notes</span></div>
+  <div class="si"><span class="sn" id="s-readers">&#8212;</span><span class="sl">Readers</span></div>
+  <div class="si"><span class="sn" id="s-months">&#8212;</span><span class="sl">Months writing</span></div>
+</div>
 
-    observables.forEach(el => observer.observe(el));
-  </script>
+<section class="nl-sec" id="newsletter">
+  <div class="nl-in">
+    <h2>Join the weekly letter.</h2>
+    <p>Let's make quality emails trendy again.</p>
+    <div class="subctr">
+      <div class="pulse"></div>
+      <span id="sublbl">&#8230; readers already subscribed</span>
+    </div>
+    <div class="nform">
+      <div class="nrow">
+        <input type="email" id="email" placeholder="you@example.com" oninput="clearErr()">
+        <p class="errmsg" id="errmsg">Please enter a valid email address.</p>
+      </div>
+      <button class="nsub" id="subbtn" onclick="subscribe()">Subscribe</button>
+    </div>
+    <p class="nnote">No spam. Unsubscribe anytime.</p>
+  </div>
+</section>
+
+</main>
+<footer>&#169; 2026 Dan's Thoughts &#8226; Written with devotion.</footer>
+</div>
+
+<script>
+const ESSAYS=[
+  {title:"Is meritocracy disappearing over time?",cat:"Society",date:"February 2026",time:"~6 min read",body:"Our societies used to reward effort and talent above all else. Today, quotas, institutional bias and ideological gatekeeping are quietly replacing merit with conformity. This essay asks whether the ladder of opportunity is being dismantled — and who benefits from its absence."},
+  {title:"Why is referendum the key for appreciated politicians?",cat:"Politics",date:"February 2026",time:"~5 min read",body:"The most trusted leaders in modern history are those who dared to ask. Referendums are not a sign of weakness — they are a direct channel between the governed and the governors. When politicians bypass the people, they do not just lose votes. They lose legitimacy."}
+];
+
+(function(){
+  function wn(d){const u=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())),dy=u.getUTCDay()||7;u.setUTCDate(u.getUTCDate()+4-dy);const y=new Date(Date.UTC(u.getUTCFullYear(),0,1));return Math.ceil(((u-y)/864e5+1)/7)}
+  const n=new Date(),idx=(wn(n)+n.getFullYear()*100)%ESSAYS.length,e=ESSAYS[idx];
+  document.getElementById('ft-title').textContent=e.title;
+  document.getElementById('ft-cat').textContent=e.cat;
+  document.getElementById('ft-date').textContent=e.date;
+  document.getElementById('ft-time').textContent=e.time;
+  document.getElementById('ft-body').textContent=e.body;
+})();
+
+function monthsSince(){const s=new Date(2026,1,1),n=new Date();return Math.max(1,(n.getFullYear()-s.getFullYear())*12+(n.getMonth()-s.getMonth())+1)}
+
+async function sg(k){try{const r=await window.storage.get(k,true);return r?JSON.parse(r.value):null}catch{return null}}
+async function ss(k,v){try{await window.storage.set(k,JSON.stringify(v),true)}catch{}}
+
+const EC=ESSAYS.length, NC=document.querySelectorAll('.nc').length;
+
+async function initStats(){
+  let r=await sg('stat-readers')||0;r++;await ss('stat-readers',r);
+  const s=await sg('stat-subs')||0;
+  anim('s-essays',EC);anim('s-notes',NC);anim('s-readers',r);anim('s-months',monthsSince());
+  document.getElementById('sublbl').textContent=s+' reader'+(s!==1?'s':'')+' already subscribed';
+}
+
+function anim(id,target){
+  const el=document.getElementById(id);if(!el)return;let st=null;
+  const f=ts=>{if(!st)st=ts;const p=Math.min((ts-st)/1400,1);el.textContent=Math.floor((1-Math.pow(1-p,3))*target);if(p<1)requestAnimationFrame(f);else el.textContent=target};
+  requestAnimationFrame(f);
+}
+
+function filt(lbl,btn){
+  document.querySelectorAll('.lbtn').forEach(b=>b.classList.remove('on'));btn.classList.add('on');
+  document.querySelectorAll('.nc').forEach((c,i)=>{
+    const m=lbl==='all'||c.dataset.label===lbl;
+    if(m){c.classList.remove('hide','vis');setTimeout(()=>c.classList.add('vis'),i*80)}
+    else{c.classList.add('hide');c.classList.remove('vis')}
+  });
+}
+
+function isEmail(e){return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e)}
+function clearErr(){document.getElementById('email').classList.remove('err');document.getElementById('errmsg').classList.remove('show')}
+
+async function subscribe(){
+  const inp=document.getElementById('email'),email=inp.value.trim(),msg=document.getElementById('errmsg'),btn=document.getElementById('subbtn');
+  if(!isEmail(email)){inp.classList.add('err');msg.classList.add('show');inp.focus();return}
+  let s=await sg('stat-subs')||0;await ss('stat-subs',s+1);
+  btn.textContent='Redirecting…';btn.disabled=true;
+  setTimeout(()=>window.location.href='acknowledgements',600);
+}
+
+function go(id){
+  event.preventDefault();const el=document.querySelector(id);
+  if(el)window.scrollTo({top:el.getBoundingClientRect().top+window.pageYOffset-80,behavior:'smooth'});
+}
+
+window.addEventListener('scroll',()=>{
+  document.getElementById('prog').style.transform='scaleX('+Math.min(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight),1)+')';
+  document.getElementById('btt').classList.toggle('vis',window.scrollY>400);
+});
+
+function toggleTheme(){
+  document.body.classList.toggle('lm');
+  document.getElementById('tlbl').textContent=document.body.classList.contains('lm')?'Dark mode':'Light mode';
+}
+
+const obs=new IntersectionObserver((entries)=>{
+  entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('vis'),i*120);obs.unobserve(e.target)}});
+},{threshold:.1});
+document.querySelectorAll('.card,.nc').forEach(el=>obs.observe(el));
+
+initStats();
+</script>
 </body>
 </html>
