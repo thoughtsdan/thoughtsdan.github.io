@@ -3,155 +3,212 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dan | I write on politics, finance and society.</title>
+<title>Dan | I write on the situation of the west in this era.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Space+Mono&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --black: #0a0a0a;
-    --white: #f5f3ee;
-    --grey: #999;
-    --line: 1px solid #d8d5cf;
+    --bg: #0e0e0e;
+    --surface: #161616;
+    --white: #f0ede6;
+    --grey: #666;
+    --dim: #333;
+    --line: 1px solid #2a2a2a;
+    --accent: #f0ede6;
   }
 
+  html { scroll-behavior: smooth; }
+
   body {
-    background: var(--white);
-    color: var(--black);
-    font-family: 'Space Mono', monospace;
+    background: var(--bg);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
     min-height: 100vh;
   }
 
+  /* noise */
   body::before {
     content: '';
     position: fixed; inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-    pointer-events: none; z-index: 100; opacity: .5;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 100; opacity: .6;
   }
 
-  /* HEADER */
+  /* ── HEADER ── */
   header {
     border-bottom: var(--line);
     display: flex; align-items: center; justify-content: space-between;
-    padding: 0 2.5rem; height: 56px;
-    position: sticky; top: 0; background: var(--white); z-index: 50;
+    padding: 0 3.5rem; height: 58px;
+    position: sticky; top: 0; background: var(--bg); z-index: 50;
   }
 
   .site-title {
-    font-family: 'IM Fell English', serif;
-    font-size: 1.45rem; text-decoration: none; color: var(--black);
+    font-family: 'Lora', serif;
+    font-size: 1.5rem; text-decoration: none; color: var(--white);
+    letter-spacing: -.01em;
   }
 
-  nav { display: flex; gap: 2rem; }
+  nav { display: flex; gap: 2.5rem; }
   nav a {
-    font-size: .63rem; letter-spacing: .16em; text-transform: uppercase;
+    font-size: .75rem; letter-spacing: .08em; text-transform: uppercase;
     text-decoration: none; color: var(--grey); transition: color .2s;
+    font-weight: 400;
   }
-  nav a:hover { color: var(--black); }
+  nav a:hover { color: var(--white); }
 
-  /* NEWSLETTER STRIP */
-  .nl-strip {
-    border-bottom: 2px solid var(--black);
-    padding: 1rem 2.5rem;
-    display: flex; align-items: center; gap: 2rem;
+  /* ── NEWSLETTER ── */
+  #newsletter {
+    border-bottom: var(--line);
+    padding: 4rem 3.5rem;
+    display: flex; flex-direction: column; align-items: center;
+    gap: 1.5rem; text-align: center;
     opacity: 0; animation: rise .5s ease forwards .05s;
   }
 
-  .nl-strip p {
-    font-size: .85rem; color: var(--grey); letter-spacing: .03em;
+  .nl-label {
+    font-family: 'Lora', serif;
+    font-size: 2rem; color: var(--white); font-weight: 400;
   }
-  .nl-strip p strong { color: var(--black); font-size: 1rem; }
 
-  .nl-form { display: flex; border: 1px solid var(--black); }
+  .nl-sub {
+    font-size: .9rem; color: var(--grey); letter-spacing: .01em;
+    max-width: 420px; line-height: 1.6; font-weight: 300;
+  }
+
+  .nl-form { display: flex; border: 1px solid var(--dim); flex-shrink: 0; width: 100%; max-width: 480px; }
   .nl-form input {
     background: transparent; border: none; outline: none;
-    padding: .5rem .85rem; font-family: 'Space Mono', monospace;
-    font-size: .7rem; color: var(--black); width: 210px;
+    padding: .9rem 1.2rem; font-family: 'Inter', sans-serif;
+    font-size: .88rem; color: var(--white); flex: 1;
   }
-  .nl-form input::placeholder { color: #bbb; }
+  .nl-form input::placeholder { color: #444; }
   .nl-form button {
-    background: var(--black); color: var(--white); border: none;
-    padding: .5rem 1rem; font-family: 'Space Mono', monospace;
-    font-size: .63rem; letter-spacing: .1em; text-transform: uppercase;
-    cursor: pointer; transition: opacity .2s;
+    background: var(--white); color: var(--bg); border: none;
+    padding: .9rem 1.5rem; font-family: 'Inter', sans-serif;
+    font-size: .72rem; letter-spacing: .1em; text-transform: uppercase;
+    cursor: pointer; transition: opacity .2s; white-space: nowrap;
+    font-weight: 500;
   }
-  .nl-form button:hover { opacity: .75; }
+  .nl-form button:hover { opacity: .8; }
 
-  /* ESSAYS */
-  main { display: grid; grid-template-columns: repeat(3, 1fr); }
+  /* ── ABOUT SECTION ── */
+  #about {
+    border-bottom: var(--line);
+    padding: 4rem 3.5rem;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .about-label {
+    font-size: .62rem; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--grey); padding-top: .25rem;
+  }
+
+  .about-content h2 {
+    font-family: 'Lora', serif;
+    font-size: 1.9rem; font-weight: 400; line-height: 1.2;
+    margin-bottom: 1.2rem; color: var(--white);
+  }
+
+  .about-content p {
+    font-size: .88rem; line-height: 1.85; color: var(--grey);
+    max-width: 52ch; margin-bottom: .8rem; font-weight: 300;
+  }
+
+  .about-content p:last-child { margin-bottom: 0; }
+
+  /* ── ESSAYS ── */
+  #essays {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
 
   .essay {
     border-right: var(--line); border-bottom: var(--line);
-    padding: 1.8rem 2rem 2.2rem;
+    padding: 2.8rem 2.8rem 3.2rem;
     text-decoration: none; color: inherit;
-    display: flex; flex-direction: column; gap: .55rem;
+    display: flex; flex-direction: column; gap: .8rem;
     position: relative; overflow: hidden;
     opacity: 0; transform: translateY(10px);
     transition: background .2s;
   }
   .essay:nth-child(3n) { border-right: none; }
-  .essay:hover { background: #eeebe4; }
+  .essay:hover { background: #1c1c1c; }
   .essay::after {
     content: ''; position: absolute; bottom: 0; left: 0;
-    width: 0; height: 1px; background: var(--black); transition: width .3s;
+    width: 0; height: 1px; background: var(--white); transition: width .3s;
   }
   .essay:hover::after { width: 100%; }
   .essay.visible { animation: rise .45s ease forwards; }
 
-
-
   .essay-meta {
-    font-size: .59rem; letter-spacing: .12em; text-transform: uppercase;
-    color: var(--grey); display: flex; gap: .55rem; align-items: center;
+    font-size: .62rem; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--grey); display: flex; gap: .6rem; align-items: center;
   }
   .tag {
-    background: var(--black); color: var(--white);
-    padding: .18em .48em; font-size: .56rem; letter-spacing: .08em;
+    background: var(--white); color: var(--bg);
+    padding: .2em .55em; font-size: .58rem; letter-spacing: .08em;
   }
   .essay-title {
-    font-family: 'IM Fell English', serif;
-    font-size: 1.25rem; font-weight: 400; line-height: 1.2;
+    font-family: 'Lora', serif;
+    font-size: 1.5rem; font-weight: 400; line-height: 1.25;
+    color: var(--white);
   }
   .read {
-    font-size: .59rem; letter-spacing: .12em; text-transform: uppercase;
-    color: var(--grey); margin-top: .3rem; transition: color .2s;
+    font-size: .6rem; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--grey); margin-top: .4rem; transition: color .2s;
   }
-  .essay:hover .read { color: var(--black); }
+  .essay:hover .read { color: var(--white); }
 
-  /* FOOTER */
+  /* ── FOOTER ── */
   footer {
-    border-top: var(--line); padding: 1.3rem 2.5rem;
+    border-top: var(--line);
+    padding: 2.5rem 3.5rem;
     display: flex; justify-content: space-between; align-items: center;
+    gap: 2rem;
   }
-  footer span { font-size: .6rem; color: var(--grey); letter-spacing: .05em; }
 
-  /* ABOUT PAGE */
-  .about-page {
-    display: none; max-width: 560px; margin: 5rem auto;
-    padding: 0 2rem;
+  .footer-copy {
+    font-size: .6rem; color: var(--grey); letter-spacing: .06em;
   }
-  .about-page.active { display: block; }
-  .about-page h2 {
-    font-family: 'IM Fell English', serif; font-size: 2rem;
-    font-weight: 400; margin-bottom: 1.5rem;
-  }
-  .about-page p {
-    font-size: .78rem; line-height: 1.8; color: #444; margin-bottom: 1rem;
-  }
-  .back {
-    display: inline-block; margin-top: 2rem;
-    font-size: .62rem; letter-spacing: .14em; text-transform: uppercase;
-    color: var(--grey); text-decoration: none; transition: color .2s;
-  }
-  .back:hover { color: var(--black); }
 
-  /* TOAST */
+  .twitter-promo {
+    display: flex; align-items: center; gap: 1rem;
+    text-decoration: none;
+    border: var(--line);
+    padding: .9rem 1.4rem;
+    transition: border-color .2s, background .2s;
+  }
+  .twitter-promo:hover {
+    border-color: var(--grey);
+    background: #161616;
+  }
+
+  .twitter-promo .x-icon {
+    width: 18px; height: 18px; fill: var(--white); flex-shrink: 0;
+  }
+
+  .twitter-promo .x-text {
+    display: flex; flex-direction: column; gap: .15rem;
+  }
+  .twitter-promo .x-handle {
+    font-size: .78rem; color: var(--white); letter-spacing: .02em;
+  }
+  .twitter-promo .x-cta {
+    font-size: .58rem; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--grey);
+  }
+
+  /* ── TOAST ── */
   .toast {
     position: fixed; bottom: 1.5rem; left: 50%;
     transform: translateX(-50%) translateY(.8rem);
-    background: var(--black); color: var(--white);
-    padding: .6rem 1.3rem; font-size: .63rem; letter-spacing: .1em;
+    background: var(--white); color: var(--bg);
+    padding: .65rem 1.4rem; font-size: .63rem; letter-spacing: .1em;
     text-transform: uppercase; opacity: 0; transition: all .3s;
     pointer-events: none; z-index: 200;
   }
@@ -159,43 +216,62 @@
 
   @keyframes rise { to { opacity: 1; transform: translateY(0); } }
 
-  @media (max-width: 860px) {
-    main { grid-template-columns: 1fr 1fr; }
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    header, #newsletter, #about, footer { padding-left: 2rem; padding-right: 2rem; }
+    #essays { grid-template-columns: 1fr 1fr; }
+    .essay { padding-left: 2rem; padding-right: 2rem; }
     .essay:nth-child(3n) { border-right: var(--line); }
     .essay:nth-child(2n) { border-right: none; }
-    .nl-strip { flex-wrap: wrap; gap: .75rem; }
+    #about { grid-template-columns: 1fr; gap: 1.5rem; }
+    #newsletter { padding: 3rem 2rem; }
+    .nl-form { max-width: 100%; }
   }
-  @media (max-width: 560px) {
-    header, .nl-strip, footer { padding-left: 1.2rem; padding-right: 1.2rem; }
-    main { grid-template-columns: 1fr; }
-    .essay, .essay.featured { grid-column: span 1; border-right: none; }
-    .nl-form input { width: 150px; }
+  @media (max-width: 580px) {
+    header, #newsletter, #about, footer { padding-left: 1.4rem; padding-right: 1.4rem; }
+    #essays { grid-template-columns: 1fr; }
+    .essay { border-right: none; padding: 2rem 1.4rem 2.4rem; }
+    .nl-form input { width: 160px; }
+    footer { flex-direction: column; align-items: flex-start; }
   }
 </style>
 </head>
 <body>
 
+<!-- HEADER -->
 <header>
-  <a href="#" class="site-title" onclick="showHome(event)">Dan</a>
+  <a href="#" class="site-title">Dan</a>
   <nav>
-    <a href="#" onclick="showHome(event)">Essays</a>
-    <a href="#" onclick="showAbout(event)">About</a>
+    <a href="#newsletter">Newsletter</a>
+    <a href="#about">About</a>
+    <a href="#essays">Essays</a>
   </nav>
 </header>
 
-<!-- NEWSLETTER STRIP -->
-<div class="nl-strip" id="nlStrip">
-  <p><strong>Newsletter</strong> — on power, politics, and what we'd rather not see.</p>
+<!-- NEWSLETTER -->
+<div id="newsletter">
+  <span class="nl-label">Newsletter</span>
+  <p class="nl-sub">On power, politics, and what we'd rather not see — direct to your inbox.</p>
   <div class="nl-form">
     <input type="email" id="emailInput" placeholder="your@email.com" />
     <button onclick="subscribe()">Subscribe</button>
   </div>
 </div>
 
+<!-- ABOUT -->
+<section id="about">
+  <span class="about-label">About</span>
+  <div class="about-content">
+    <h2>I write about power,<br>politics, and blind spots.</h2>
+    <p>I'm Dan. These essays are my attempt to look clearly at the structures we live inside — the ones that shape what's possible, what's said, and what gets ignored.</p>
+    <p>No algorithm. No noise. Just the writing.</p>
+  </div>
+</section>
+
 <!-- ESSAYS -->
-<main id="essayGrid">
+<main id="essays">
 
-
+  <a href="#" class="essay">
     <div class="essay-meta">
       <span class="tag">Politics</span>
       <span>Mar 12, 2025 · 8 min</span>
@@ -251,22 +327,24 @@
 
 </main>
 
-<!-- ABOUT PAGE -->
-<div class="about-page" id="aboutPage">
-  <h2>About</h2>
-  <p>I'm Dan. I write essays on politics, power, and the structures we prefer not to examine too closely.</p>
-  <p>This is where I publish them. No algorithm, no noise — just the writing.</p>
-  <a href="#" class="back" onclick="showHome(event)">← Back to essays</a>
-</div>
-
+<!-- FOOTER -->
 <footer>
-  <span>© 2025 Dan</span>
+  <span class="footer-copy">© 2025 Dan</span>
+
+  <a href="https://x.com/dan" target="_blank" class="twitter-promo">
+    <svg class="x-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/>
+    </svg>
+    <div class="x-text">
+      <span class="x-handle">@dan</span>
+      <span class="x-cta">Follow on X</span>
+    </div>
+  </a>
 </footer>
 
 <div class="toast" id="toast">Subscribed ✓</div>
 
 <script>
-  // scroll-animate cards
   const cards = document.querySelectorAll('.essay');
   const obs = new IntersectionObserver((entries) => {
     entries.forEach((e, i) => {
@@ -278,25 +356,11 @@
   }, { threshold: 0.05 });
   cards.forEach(c => obs.observe(c));
 
-  function showAbout(e) {
-    e.preventDefault();
-    document.getElementById('essayGrid').style.display = 'none';
-    document.getElementById('nlStrip').style.display = 'none';
-    document.getElementById('aboutPage').classList.add('active');
-  }
-
-  function showHome(e) {
-    e.preventDefault();
-    document.getElementById('essayGrid').style.display = 'grid';
-    document.getElementById('nlStrip').style.display = 'flex';
-    document.getElementById('aboutPage').classList.remove('active');
-  }
-
   function subscribe() {
     const input = document.getElementById('emailInput');
     if (!input.value.trim().includes('@')) {
-      input.style.outline = '1px solid #0a0a0a';
-      setTimeout(() => input.style.outline = '', 900);
+      input.style.borderBottom = '1px solid #f0ede6';
+      setTimeout(() => input.style.borderBottom = '', 900);
       return;
     }
     input.value = '';
